@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Forest Parameters Guide — HDFC Bank AI Project</title>
+    
+    <!-- MathJax for rendering LaTeX formulas -->
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            line-height: 1.65;
+            color: #24292f;
+            background-color: #f6f8fa;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #0d47a1;
+            color: white;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar h2 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+        .nav-links a {
+            color: #e3f2fd;
+            text-decoration: none;
+            margin-left: 16px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .nav-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 980px;
+            margin: 30px auto;
+            background: #ffffff;
+            padding: 45px 55px;
+            border-radius: 8px;
+            border: 1px solid #d0d7de;
+            box-shadow: 0 3px 12px rgba(140, 149, 159, 0.15);
+        }
+        h1, h2, h3, h4 {
+            color: #1a202c;
+            font-weight: 600;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            line-height: 1.25;
+        }
+        h1 {
+            font-size: 2rem;
+            border-bottom: 2px solid #eaecef;
+            padding-bottom: 10px;
+            color: #0d47a1;
+        }
+        h2 {
+            font-size: 1.5rem;
+            border-bottom: 1px solid #eaecef;
+            padding-bottom: 8px;
+            margin-top: 32px;
+        }
+        h3 {
+            font-size: 1.25rem;
+        }
+        p, ul, ol {
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-size: 1rem;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            display: table;
+            font-size: 0.92rem;
+        }
+        th, td {
+            border: 1px solid #d0d7de;
+            padding: 10px 14px;
+            text-align: left;
+        }
+        th {
+            background-color: #f3f4f6;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        code {
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+            background-color: rgba(175, 184, 193, 0.2);
+            padding: 0.2em 0.4em;
+            border-radius: 6px;
+            font-size: 85%;
+            color: #b91c1c;
+        }
+        pre {
+            background-color: #1e293b;
+            color: #f8fafc;
+            padding: 16px;
+            border-radius: 8px;
+            overflow: auto;
+            font-size: 88%;
+            line-height: 1.45;
+        }
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+        }
+        blockquote {
+            margin: 16px 0;
+            padding: 12px 18px;
+            border-left: 4px solid #2563eb;
+            background-color: #eff6ff;
+            color: #1e3a8a;
+            border-radius: 0 6px 6px 0;
+        }
+        blockquote p {
+            margin: 0;
+        }
+        /* MathJax equation display formatting */
+        .MathJax {
+            font-size: 1.15em !important;
+            color: #0f172a;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+        @media print {
+            .navbar { display: none; }
+            .container { border: none; box-shadow: none; margin: 0; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h2>🏦 HDFC Bank Loan Prediction — AI Project Manual</h2>
+        <div class="nav-links">
+            <a href="INDEX.html">📑 All Documents</a>
+            <a href="PROJECT_PLAN.html">Project Plan</a>
+            <a href="LEADERS_VIVA_GUIDE.html">Viva Guide</a>
+            <a href="PARAMETERS_CHEAT_SHEET.html">Cheat Sheet</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1 id="random-forest-complete-parameter-architecture-guide">Random Forest — Complete Parameter &amp; Architecture Guide</h1>
+<blockquote>
+<p><strong>Project:</strong> HDFC Bank Loan Approval Prediction<br />
+<strong>Target:</strong> Binary Classification (<code>0 = Rejected</code>, <code>1 = Approved</code>)<br />
+<strong>Model:</strong> <code>sklearn.ensemble.RandomForestClassifier</code><br />
+<strong>Role:</strong> Group Leader's Technical Deep-Dive &amp; Parameter Manual</p>
+</blockquote>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#1-core-mathematical-intuition">Core Mathematical Intuition</a></li>
+<li><a href="#2-complete-parameter-dictionary">Complete Parameter Dictionary</a></li>
+<li><a href="#3-parameter-sensitivity-analysis">Parameter Sensitivity Analysis (What Happens When You Change...)</a></li>
+<li><a href="#4-our-chosen-configuration-for-hdfc-loan-data">Our Chosen Configuration for HDFC Loan Data</a></li>
+<li><a href="#5-feature-importance-calculation">Feature Importance Calculation (Mean Decrease in Impurity)</a></li>
+<li><a href="#6-out-of-bag-oob-error-explained">Out-of-Bag (OOB) Error Explained</a></li>
+<li><a href="#7-top-viva-questions--model-answers-on-parameters">Top Viva Questions &amp; Model Answers on Parameters</a></li>
+</ol>
+<hr />
+<h2 id="1-core-mathematical-intuition">1. Core Mathematical Intuition</h2>
+<p>A Random Forest is an <strong>ensemble meta-estimator</strong> that fits multiple decision tree classifiers on various sub-samples of the dataset and uses <strong>majority voting</strong> to compute the final prediction.</p>
+<h3 id="the-two-pillars-of-random-forest">The Two Pillars of Random Forest:</h3>
+<h4 id="1-bootstrap-aggregating-bagging">1. Bootstrap Aggregating (Bagging):</h4>
+<ul>
+<li>If the training set has $N$ applicants, each individual tree is trained on a <strong>bootstrap sample</strong> of size $N$ drawn <strong>with replacement</strong> from the training set.</li>
+<li>Due to sampling with replacement, approximately <strong>63.2%</strong> of original samples appear in each bootstrap sample, while <strong>36.8%</strong> are left out (called <strong>Out-of-Bag (OOB) samples</strong>).</li>
+</ul>
+<h4 id="2-random-subspace-method-feature-sub-sampling">2. Random Subspace Method (Feature Sub-sampling):</h4>
+<ul>
+<li>When splitting a node in a standard decision tree, the algorithm examines all $M$ features to find the best split.</li>
+<li>In a Random Forest, at each candidate split, only a <strong>random subset of $m \ll M$ features</strong> (typically $m = \sqrt{M}$) is considered.</li>
+<li><strong>Why this matters:</strong> This intentionally decorrelates the individual trees! If one feature (like <code>Credit_History</code>) is overwhelmingly dominant, all regular decision trees would pick it at the root and look identical. By restricting feature choices at each split, other features (like <code>IncomeToLoanRatio</code> and <code>TotalIncome</code>) get opportunities to form unique decision paths.</li>
+</ul>
+<h4 id="3-majority-voting">3. Majority Voting:</h4>
+<p>For an applicant $\mathbf{x}$, each tree $t \in {1, 2, \dots, B}$ casts a vote $\hat{y}<em>t \in {0, 1}$.
+$$\hat{y}</em>{\text{ensemble}} = \text{mode}\left( {\hat{y}<em>1, \hat{y}_2, \dots, \hat{y}_B} \right) \quad \text{or} \quad \hat{P}(Y=1 \mid \mathbf{x}) = \frac{1}{B} \sum</em>{t=1}^{B} P_t(Y=1 \mid \mathbf{x})$$</p>
+<hr />
+<h2 id="2-complete-parameter-dictionary">2. Complete Parameter Dictionary</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Type &amp; Default</th>
+<th style="text-align: left;">What It Controls</th>
+<th style="text-align: left;">Valid Options</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>n_estimators</code></td>
+<td style="text-align: left;"><code>int, default=100</code></td>
+<td style="text-align: left;"><strong>Number of decision trees</strong> built in the ensemble forest.</td>
+<td style="text-align: left;">Positive integer: <code>10</code>, <code>50</code>, <code>100</code>, <code>200</code>, <code>500</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>criterion</code></td>
+<td style="text-align: left;"><code>{'gini', 'entropy', 'log_loss'}, default='gini'</code></td>
+<td style="text-align: left;">Function to measure split quality inside individual trees.</td>
+<td style="text-align: left;"><code>'gini'</code>, <code>'entropy'</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>max_depth</code></td>
+<td style="text-align: left;"><code>int, default=None</code></td>
+<td style="text-align: left;">Maximum depth of individual trees.</td>
+<td style="text-align: left;">Integer $\ge 1$ or <code>None</code> (unlimited)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>min_samples_split</code></td>
+<td style="text-align: left;"><code>int or float, default=2</code></td>
+<td style="text-align: left;">Minimum samples needed to split an internal node.</td>
+<td style="text-align: left;">Integer $\ge 2$</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>min_samples_leaf</code></td>
+<td style="text-align: left;"><code>int or float, default=1</code></td>
+<td style="text-align: left;">Minimum samples needed at a terminal leaf node.</td>
+<td style="text-align: left;">Integer $\ge 1$</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>max_features</code></td>
+<td style="text-align: left;"><code>{'sqrt', 'log2', None}, int or float, default='sqrt'</code></td>
+<td style="text-align: left;"><strong>Number of features considered at each split</strong>.</td>
+<td style="text-align: left;"><code>'sqrt'</code> ($\sqrt{14} \approx 3.7$), <code>'log2'</code>, <code>None</code> (all 14)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>bootstrap</code></td>
+<td style="text-align: left;"><code>bool, default=True</code></td>
+<td style="text-align: left;">Whether bootstrap samples are used when building trees.</td>
+<td style="text-align: left;"><code>True</code>, <code>False</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>oob_score</code></td>
+<td style="text-align: left;"><code>bool, default=False</code></td>
+<td style="text-align: left;">Whether to use out-of-bag samples to estimate generalization score.</td>
+<td style="text-align: left;"><code>True</code>, <code>False</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>n_jobs</code></td>
+<td style="text-align: left;"><code>int, default=None</code></td>
+<td style="text-align: left;">Number of CPU cores used to train trees in parallel.</td>
+<td style="text-align: left;"><code>-1</code> (all available cores), <code>1</code>, <code>2</code>, <code>4</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>class_weight</code></td>
+<td style="text-align: left;"><code>{'balanced', 'balanced_subsample'}, dict, default=None</code></td>
+<td style="text-align: left;">Weights associated with classes.</td>
+<td style="text-align: left;"><code>None</code>, <code>'balanced'</code>, <code>'balanced_subsample'</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>random_state</code></td>
+<td style="text-align: left;"><code>int, default=None</code></td>
+<td style="text-align: left;">Seed for bootstrapping and feature randomness.</td>
+<td style="text-align: left;">Any integer (we use <code>42</code>)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-parameter-sensitivity-analysis">3. Parameter Sensitivity Analysis</h2>
+<h3 id="31-what-happens-when-n_estimators-changes">3.1 What happens when <code>n_estimators</code> changes?</h3>
+<ul>
+<li><strong><code>n_estimators = 10</code>:</strong></li>
+<li>Forest is too small. High variance across different random seeds.</li>
+<li>Individual tree mistakes aren't sufficiently averaged out.</li>
+<li><strong><code>n_estimators = 100</code> (Our Setting):</strong></li>
+<li>Gold standard balance. Sufficient trees for stable majority voting.</li>
+<li>Yields high test accuracy (<strong>84.55%</strong>) and the highest ROC-AUC (<strong>0.8619</strong>).</li>
+<li><strong><code>n_estimators = 500</code> or <code>1000</code>:</strong></li>
+<li>Marginal accuracy gain ($&lt; 0.2\%$), but 5x to 10x slower training time.</li>
+<li><strong>Crucial Rule:</strong> Unlike boosting or neural nets, increasing <code>n_estimators</code> in Random Forest <strong>never causes overfitting</strong>; it only plateaus.</li>
+</ul>
+<hr />
+<h3 id="32-what-happens-when-max_features-changes">3.2 What happens when <code>max_features</code> changes?</h3>
+<ul>
+<li><strong><code>max_features='sqrt'</code> (Default &amp; Optimal):</strong></li>
+<li>Takes $\sqrt{14} \approx 3$ or $4$ features at each split.</li>
+<li>Maximum decorrelation between trees while retaining strong predictive splits.</li>
+<li><strong><code>max_features=None</code> (All 14 features):</strong></li>
+<li>Every tree sees all features at every split.</li>
+<li><strong>Result:</strong> Trees become correlated and redundant. The ensemble acts almost like a single slightly averaged tree, losing its variance-reduction power.</li>
+<li><strong><code>max_features=1</code>:</strong></li>
+<li>Only 1 feature evaluated at each split.</li>
+<li>Trees become very diverse, but many splits are uninformative. Requires a much larger <code>n_estimators</code> (e.g. 500) to compensate.</li>
+</ul>
+<hr />
+<h3 id="33-what-happens-when-bootstrap-changes">3.3 What happens when <code>bootstrap</code> changes?</h3>
+<ul>
+<li><strong><code>bootstrap=True</code> (Default):</strong></li>
+<li>Each tree is trained on a different random resample. Maximizes ensemble diversity.</li>
+<li><strong><code>bootstrap=False</code>:</strong></li>
+<li>Every single tree is trained on the exact identical dataset. The only randomness remaining is <code>max_features</code>.</li>
+<li>Increases tree correlation and diminishes generalization.</li>
+</ul>
+<hr />
+<h3 id="34-what-happens-when-n_jobs-changes">3.4 What happens when <code>n_jobs</code> changes?</h3>
+<ul>
+<li><strong><code>n_jobs=1</code>:</strong> Trees are trained sequentially one-by-one on a single CPU core.</li>
+<li><strong><code>n_jobs=-1</code>:</strong> Utilizes all logical CPU cores on the machine. Because each tree is trained completely independently (embarrassingly parallel), training speed increases almost linearly with core count!</li>
+</ul>
+<hr />
+<h2 id="4-our-chosen-configuration-for-hdfc-loan-data">4. Our Chosen Configuration for HDFC Loan Data</h2>
+<pre><code class="language-python">model = RandomForestClassifier(
+    n_estimators=100,        # 100 independent decision trees
+    max_depth=6,             # Controlled depth prevents individual tree overfitting
+    min_samples_split=5,     # Modest threshold for internal splits
+    min_samples_leaf=2,      # Regularizes leaf purity
+    max_features='sqrt',     # sqrt(14) ~ 3.7 features per split (decorrelation)
+    random_state=42,         # Reproducibility
+    n_jobs=-1                # Full CPU core utilization
+)
+</code></pre>
+<h3 id="performance-on-hdfc-dataset">Performance on HDFC Dataset:</h3>
+<ul>
+<li><strong>5-Fold Cross-Validation Accuracy:</strong> <code>79.42% (+/- 4.48%)</code></li>
+<li><strong>Test Set Accuracy:</strong> <code>84.55%</code></li>
+<li><strong>Precision:</strong> <code>0.8367</code></li>
+<li><strong>Recall:</strong> <code>0.9647</code></li>
+<li><strong>F1-Score:</strong> <code>0.8962</code></li>
+<li><strong>ROC-AUC:</strong> <strong><code>0.8619</code> (Highest among all evaluated models!)</strong></li>
+<li><strong>Visual Export:</strong> Feature importance chart saved to <code>reports/random_forest_feature_importance.png</code>.</li>
+</ul>
+<hr />
+<h2 id="5-feature-importance-calculation-mean-decrease-in-impurity">5. Feature Importance Calculation (Mean Decrease in Impurity)</h2>
+<p>In Random Forest, feature importance is computed using <strong>Mean Decrease in Impurity (MDI)</strong>:
+$$\text{Importance}(X_j) = \frac{1}{B} \sum_{t=1}^{B} \sum_{n \in \text{nodes in } t \text{ split on } X_j} \Delta \text{Gini}(n)$$</p>
+<p>Where $\Delta \text{Gini}(n) = N_n \text{Gini}(n) - N_{n_L} \text{Gini}(n_L) - N_{n_R} \text{Gini}(n_R)$.</p>
+<h3 id="empirical-feature-rankings-on-hdfc-loan-data">Empirical Feature Rankings on HDFC Loan Data:</h3>
+<ol>
+<li><strong><code>Credit_History</code> (0.442):</strong> Dominates 44% of total impurity reduction.</li>
+<li><strong><code>IncomeToLoanRatio</code> (0.095):</strong> Our engineered Debt-to-Income feature!</li>
+<li><strong><code>TotalIncome</code> (0.095):</strong> Our engineered household capacity feature!</li>
+<li><strong><code>ApplicantIncome</code> (0.079):</strong> Primary earner cash flow.</li>
+<li><strong><code>LoanAmountPerMonth</code> (0.073):</strong> Our engineered EMI burden feature!</li>
+<li><strong><code>LoanAmount</code> (0.060):</strong> Principal requested.</li>
+<li><strong><code>CoapplicantIncome</code> (0.048):</strong> Secondary earner cash flow.</li>
+</ol>
+<p><em>(Notice that our 3 engineered features rank #2, #3, and #5 in importance, proving their vital value in the project!)</em></p>
+<hr />
+<h2 id="6-out-of-bag-oob-error-explained">6. Out-of-Bag (OOB) Error Explained</h2>
+<p>If <code>oob_score=True</code>, scikit-learn evaluates each sample using only the trees that <strong>did not</strong> have that sample in their bootstrap training set.
+* <strong>Why it is useful:</strong> It provides an unbiased validation estimate <strong>without needing a separate validation split or cross-validation</strong>!
+* In mathematical expectation, OOB error closely approximates $K$-fold cross-validation error while saving compute time.</p>
+<hr />
+<h2 id="7-top-viva-questions-model-answers-on-parameters">7. Top Viva Questions &amp; Model Answers on Parameters</h2>
+<h3 id="q1-can-a-random-forest-overfit-if-you-increase-n_estimators-to-10000">Q1: Can a Random Forest overfit if you increase <code>n_estimators</code> to 10,000?</h3>
+<p><strong>Model Answer:</strong>  </p>
+<blockquote>
+<p><em>"No. Unlike Gradient Boosting, increasing the number of trees in a Random Forest does NOT cause overfitting. By the Strong Law of Large Numbers, as $n_estimators \to \infty$, the ensemble error converges to a fixed asymptotic limit. Adding more trees simply reduces variance; the only downside is wasted computational time and memory."</em></p>
+</blockquote>
+<h3 id="q2-what-is-the-purpose-of-max_featuressqrt">Q2: What is the purpose of <code>max_features='sqrt'</code>?</h3>
+<p><strong>Model Answer:</strong>  </p>
+<blockquote>
+<p><em>"<code>max_features</code> controls the number of randomly selected features considered at each node split. If all features were considered, the dominant feature (<code>Credit_History</code>) would be selected at the root of nearly every tree, making all trees highly correlated. Restricting the candidate pool to $\sqrt{M}$ forces the forest to explore different feature combinations, decorrelating the trees and drastically lowering ensemble variance."</em></p>
+</blockquote>
+<h3 id="q3-why-did-random-forest-achieve-the-highest-roc-auc-08619-even-though-logistic-regression-had-slightly-higher-test-accuracy">Q3: Why did Random Forest achieve the highest ROC-AUC (0.8619) even though Logistic Regression had slightly higher test accuracy?</h3>
+<p><strong>Model Answer:</strong>  </p>
+<blockquote>
+<p><em>"Accuracy measures performance at a single arbitrary threshold ($P \ge 0.50$). ROC-AUC measures the model's ranking ability across all possible thresholds. Random Forest produces continuous probability outputs by averaging votes across 100 trees, making its risk ranking exceptionally well-calibrated for distinguishing safe versus delinquent loan applicants across varying bank risk appetites."</em></p>
+</blockquote>
+<h3 id="q4-what-is-the-difference-between-class_weightbalanced-and-class_weightbalanced_subsample">Q4: What is the difference between <code>class_weight='balanced'</code> and <code>class_weight='balanced_subsample'</code>?</h3>
+<p><strong>Model Answer:</strong>  </p>
+<blockquote>
+<p><em>"<code>class_weight='balanced'</code> computes weights once based on the overall training class frequencies. <code>class_weight='balanced_subsample'</code> recomputes weights dynamically for each individual tree based on the class frequencies within that specific tree's bootstrap sample. The latter is slightly more adaptive to local sampling variations."</em></p>
+</blockquote>
+        <div class="footer">
+            HDFC Bank Loan Approval Classification Project | Built for AI for Engineers
+        </div>
+    </div>
+</body>
+</html>

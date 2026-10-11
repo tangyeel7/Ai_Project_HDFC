@@ -1,0 +1,174 @@
+import json
+import os
+
+os.makedirs('notebooks', exist_ok=True)
+
+cells = [
+    {
+        'cell_type': 'markdown',
+        'metadata': {},
+        'source': [
+            '# HDFC Bank Ltd. — Intelligent Loan Approval Prediction System\n',
+            '**AI for Engineers Project** | Supervised Machine Learning Pipeline\n',
+            '\n',
+            '### Objective\n',
+            'Predict whether a loan application should be **Approved (1)** or **Rejected (0)** using customer demographic and financial data.\n',
+            '\n',
+            '### Models Trained & Compared:\n',
+            '1. **Logistic Regression**\n',
+            '2. **Decision Tree Classifier**\n',
+            '3. **Random Forest Classifier**\n',
+            '4. **Support Vector Machine (SVM)**'
+        ]
+    },
+    {
+        'cell_type': 'code',
+        'execution_count': None,
+        'metadata': {},
+        'outputs': [],
+        'source': [
+            'import os\n',
+            'import sys\n',
+            'import numpy as np\n',
+            'import pandas as pd\n',
+            'import matplotlib.pyplot as plt\n',
+            'import seaborn as sns\n',
+            'import warnings\n',
+            'warnings.filterwarnings("ignore")\n',
+            '\n',
+            'sys.path.append("..")\n',
+            'from src.data_preprocessing import load_raw_data, get_train_test_data\n',
+            'from predict import predict_applicant\n',
+            '\n',
+            'print("Environment & modules imported successfully!")'
+        ]
+    },
+    {
+        'cell_type': 'markdown',
+        'metadata': {},
+        'source': [
+            '## 1. Data Exploration & Overview\n',
+            'Inspecting the raw HDFC loan application dataset.'
+        ]
+    },
+    {
+        'cell_type': 'code',
+        'execution_count': None,
+        'metadata': {},
+        'outputs': [],
+        'source': [
+            'df_raw = load_raw_data("../data/loan_data.csv")\n',
+            'print("Dataset Shape:", df_raw.shape)\n',
+            'print("\\nClass Distribution:")\n',
+            'print(df_raw["Loan_Status"].value_counts(normalize=True))\n',
+            'df_raw.head()'
+        ]
+    },
+    {
+        'cell_type': 'markdown',
+        'metadata': {},
+        'source': [
+            '## 2. Preprocessing & Financial Feature Engineering\n',
+            'Creating domain-specific indicators:\n',
+            '- `TotalIncome` = ApplicantIncome + CoapplicantIncome\n',
+            '- `LoanAmountPerMonth` = LoanAmount / Term (EMI proxy)\n',
+            '- `IncomeToLoanRatio` = TotalIncome / LoanAmount (Debt Service Coverage Ratio)\n',
+            '- Mode/Median Imputation & StandardScaler'
+        ]
+    },
+    {
+        'cell_type': 'code',
+        'execution_count': None,
+        'metadata': {},
+        'outputs': [],
+        'source': [
+            'X_train, X_test, y_train, y_test, scaler, encoders, features = get_train_test_data("../data/loan_data.csv")\n',
+            'print(f"Features Engineered ({len(features)}): {features}")\n',
+            'print(f"Training set: {X_train.shape}, Test set: {X_test.shape}")'
+        ]
+    },
+    {
+        'cell_type': 'markdown',
+        'metadata': {},
+        'source': [
+            '## 3. Multi-Model Benchmark & Cross-Validation Comparison'
+        ]
+    },
+    {
+        'cell_type': 'code',
+        'execution_count': None,
+        'metadata': {},
+        'outputs': [],
+        'source': [
+            'df_benchmarks = pd.read_csv("../reports/model_comparison_table.csv")\n',
+            'df_benchmarks'
+        ]
+    },
+    {
+        'cell_type': 'markdown',
+        'metadata': {},
+        'source': [
+            '## 4. Evaluation Visualizations'
+        ]
+    },
+    {
+        'cell_type': 'code',
+        'execution_count': None,
+        'metadata': {},
+        'outputs': [],
+        'source': [
+            '# Display ROC Curves\n',
+            'from IPython.display import Image, display\n',
+            'display(Image("../reports/all_models_roc_curves.png"))\n',
+            'display(Image("../reports/all_models_confusion_matrices.png"))\n',
+            'display(Image("../reports/random_forest_feature_importance.png"))'
+        ]
+    },
+    {
+        'cell_type': 'markdown',
+        'metadata': {},
+        'source': [
+            '## 5. Live Inference Demonstration\n',
+            'Testing decision outcomes on sample applicants.'
+        ]
+    },
+    {
+        'cell_type': 'code',
+        'execution_count': None,
+        'metadata': {},
+        'outputs': [],
+        'source': [
+            'test_applicant = {\n',
+            '    "Gender": "Male",\n',
+            '    "Married": "Yes",\n',
+            '    "Dependents": "1",\n',
+            '    "Education": "Graduate",\n',
+            '    "Self_Employed": "No",\n',
+            '    "ApplicantIncome": 7000,\n',
+            '    "CoapplicantIncome": 2500,\n',
+            '    "LoanAmount": 140,\n',
+            '    "Loan_Amount_Term": 360,\n',
+            '    "Credit_History": 1.0,\n',
+            '    "Property_Area": "Semiurban"\n',
+            '}\n',
+            'result = predict_applicant(test_applicant)\n',
+            'print("Applicant Decision:", result["decision"])\n',
+            'print("Approval Probability:", f"{result[\'probability_approved\']}%")\n',
+            'print("Confidence Level:", f"{result[\'confidence_percent\']}%")'
+        ]
+    }
+]
+
+nb = {
+    'cells': cells,
+    'metadata': {
+        'language_info': {'name': 'python', 'version': '3.11'}
+    },
+    'nbformat': 4,
+    'nbformat_minor': 2
+}
+
+with open('notebooks/loan_prediction_complete.ipynb', 'w', encoding='utf-8') as f:
+    json.dump(nb, f, indent=2)
+
+print('Successfully created notebooks/loan_prediction_complete.ipynb!')

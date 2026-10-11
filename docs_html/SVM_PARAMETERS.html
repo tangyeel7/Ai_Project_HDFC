@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVM Parameters Guide — HDFC Bank AI Project</title>
+    
+    <!-- MathJax for rendering LaTeX formulas -->
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            line-height: 1.65;
+            color: #24292f;
+            background-color: #f6f8fa;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #0d47a1;
+            color: white;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar h2 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+        .nav-links a {
+            color: #e3f2fd;
+            text-decoration: none;
+            margin-left: 16px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .nav-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 980px;
+            margin: 30px auto;
+            background: #ffffff;
+            padding: 45px 55px;
+            border-radius: 8px;
+            border: 1px solid #d0d7de;
+            box-shadow: 0 3px 12px rgba(140, 149, 159, 0.15);
+        }
+        h1, h2, h3, h4 {
+            color: #1a202c;
+            font-weight: 600;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            line-height: 1.25;
+        }
+        h1 {
+            font-size: 2rem;
+            border-bottom: 2px solid #eaecef;
+            padding-bottom: 10px;
+            color: #0d47a1;
+        }
+        h2 {
+            font-size: 1.5rem;
+            border-bottom: 1px solid #eaecef;
+            padding-bottom: 8px;
+            margin-top: 32px;
+        }
+        h3 {
+            font-size: 1.25rem;
+        }
+        p, ul, ol {
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-size: 1rem;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            display: table;
+            font-size: 0.92rem;
+        }
+        th, td {
+            border: 1px solid #d0d7de;
+            padding: 10px 14px;
+            text-align: left;
+        }
+        th {
+            background-color: #f3f4f6;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        code {
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+            background-color: rgba(175, 184, 193, 0.2);
+            padding: 0.2em 0.4em;
+            border-radius: 6px;
+            font-size: 85%;
+            color: #b91c1c;
+        }
+        pre {
+            background-color: #1e293b;
+            color: #f8fafc;
+            padding: 16px;
+            border-radius: 8px;
+            overflow: auto;
+            font-size: 88%;
+            line-height: 1.45;
+        }
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+        }
+        blockquote {
+            margin: 16px 0;
+            padding: 12px 18px;
+            border-left: 4px solid #2563eb;
+            background-color: #eff6ff;
+            color: #1e3a8a;
+            border-radius: 0 6px 6px 0;
+        }
+        blockquote p {
+            margin: 0;
+        }
+        /* MathJax equation display formatting */
+        .MathJax {
+            font-size: 1.15em !important;
+            color: #0f172a;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+        @media print {
+            .navbar { display: none; }
+            .container { border: none; box-shadow: none; margin: 0; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h2>🏦 HDFC Bank Loan Prediction — AI Project Manual</h2>
+        <div class="nav-links">
+            <a href="INDEX.html">📑 All Documents</a>
+            <a href="PROJECT_PLAN.html">Project Plan</a>
+            <a href="LEADERS_VIVA_GUIDE.html">Viva Guide</a>
+            <a href="PARAMETERS_CHEAT_SHEET.html">Cheat Sheet</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1 id="support-vector-machine-svm-complete-parameter-architecture-guide">Support Vector Machine (SVM) — Complete Parameter &amp; Architecture Guide</h1>
+<blockquote>
+<p><strong>Project:</strong> HDFC Bank Loan Approval Prediction<br />
+<strong>Target:</strong> Binary Classification (<code>0 = Rejected</code>, <code>1 = Approved</code>)<br />
+<strong>Model:</strong> <code>sklearn.svm.SVC</code> (Support Vector Classifier)<br />
+<strong>Role:</strong> Group Leader's Technical Deep-Dive &amp; Parameter Manual</p>
+</blockquote>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#1-core-mathematical-intuition">Core Mathematical Intuition</a></li>
+<li><a href="#2-complete-parameter-dictionary">Complete Parameter Dictionary</a></li>
+<li><a href="#3-parameter-sensitivity-analysis">Parameter Sensitivity Analysis (What Happens When You Change...)</a></li>
+<li><a href="#4-our-chosen-configuration-for-hdfc-loan-data">Our Chosen Configuration for HDFC Loan Data</a></li>
+<li><a href="#5-support-vector-mechanics-on-hdfc-dataset">Support Vector Mechanics on HDFC Dataset</a></li>
+<li><a href="#6-why-feature-scaling-is-critical-for-svm">Why Feature Scaling is Critical for SVM</a></li>
+<li><a href="#7-top-viva-questions--model-answers-on-parameters">Top Viva Questions &amp; Model Answers on Parameters</a></li>
+</ol>
+<hr />
+<h2 id="1-core-mathematical-intuition">1. Core Mathematical Intuition</h2>
+<p>Support Vector Machine (SVM) is a geometric maximum-margin classifier. Its goal is to find the <strong>optimal separating hyperplane</strong> that maximizes the distance (margin) between the decision boundary and the nearest data points of each class (the <strong>support vectors</strong>).</p>
+<h3 id="1-the-maximum-margin-objective">1. The Maximum Margin Objective:</h3>
+<p>For linearly separable data:
+$$\min_{\mathbf{w}, b} \frac{1}{2} |\mathbf{w}|^2 \quad \text{subject to} \quad y_i (\mathbf{w}^T \mathbf{x}_i + b) \ge 1, \quad \forall i$$
+The geometric margin width is $\frac{2}{|\mathbf{w}|}$. Minimizing $\frac{1}{2} |\mathbf{w}|^2$ is equivalent to <strong>maximizing the margin width</strong>.</p>
+<h3 id="2-soft-margin-slack-variables-xi_i">2. Soft Margin &amp; Slack Variables ($\xi_i$):</h3>
+<p>Because real-world banking applicants overlap (some individuals with good credit still default, and vice versa), we introduce slack variables $\xi_i \ge 0$:
+$$\min_{\mathbf{w}, b, \boldsymbol{\xi}} \left( \frac{1}{2} |\mathbf{w}|^2 + C \sum_{i=1}^{N} \xi_i \right) \quad \text{subject to} \quad y_i (\mathbf{w}^T \mathbf{x}_i + b) \ge 1 - \xi_i, \quad \xi_i \ge 0$$
+* The parameter <strong>$C$</strong> directly controls the penalty for constraint violations ($\xi_i$).</p>
+<h3 id="3-the-kernel-trick-non-linear-mapping">3. The Kernel Trick (Non-Linear Mapping):</h3>
+<p>When data cannot be separated by a flat plane in original feature space $\mathbb{R}^d$, the <strong>Kernel Trick</strong> maps inputs into a higher-dimensional Hilbert space $\Phi(\mathbf{x})$ without explicitly computing high-dimensional coordinates:
+$$K(\mathbf{x}_i, \mathbf{x}_j) = \langle \Phi(\mathbf{x}_i), \Phi(\mathbf{x}_j) \rangle$$</p>
+<h4 id="key-kernel-functions">Key Kernel Functions:</h4>
+<ul>
+<li><strong>Radial Basis Function (RBF / Gaussian) Kernel (Default):</strong>
+  $$K(\mathbf{x}_i, \mathbf{x}_j) = \exp\left( -\gamma |\mathbf{x}_i - \mathbf{x}_j|^2 \right)$$</li>
+<li><strong>Linear Kernel:</strong>
+  $$K(\mathbf{x}_i, \mathbf{x}_j) = \mathbf{x}_i^T \mathbf{x}_j$$</li>
+<li><strong>Polynomial Kernel:</strong>
+  $$K(\mathbf{x}_i, \mathbf{x}_j) = (\gamma \mathbf{x}_i^T \mathbf{x}_j + r)^d$$</li>
+</ul>
+<hr />
+<h2 id="2-complete-parameter-dictionary">2. Complete Parameter Dictionary</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Type &amp; Default</th>
+<th style="text-align: left;">What It Controls</th>
+<th style="text-align: left;">Valid Options</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>C</code></td>
+<td style="text-align: left;"><code>float, default=1.0</code></td>
+<td style="text-align: left;"><strong>Regularization / Slack penalty parameter</strong>. Trade-off between margin maximization and training error minimization.</td>
+<td style="text-align: left;">Positive float: <code>0.01</code>, <code>0.1</code>, <code>1.0</code>, <code>10.0</code>, <code>100.0</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>kernel</code></td>
+<td style="text-align: left;"><code>{'linear', 'poly', 'rbf', 'sigmoid', 'precomputed'}, default='rbf'</code></td>
+<td style="text-align: left;"><strong>Specifies kernel type</strong> to project data into higher-dimensional decision space.</td>
+<td style="text-align: left;"><code>'rbf'</code>, <code>'linear'</code>, <code>'poly'</code>, <code>'sigmoid'</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>gamma</code></td>
+<td style="text-align: left;"><code>{'scale', 'auto'} or float, default='scale'</code></td>
+<td style="text-align: left;">**Kernel coefficient for <code>'rbf'</code>, <code>'poly'</code>, and <code>'sigmoid'</code>. Defines the radius of influence of each support vector.</td>
+<td style="text-align: left;"><code>'scale'</code> ($1 / (n \times \text{Var})$), <code>'auto'</code> ($1 / n$), or float (e.g., <code>0.01</code>, <code>1.0</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>degree</code></td>
+<td style="text-align: left;"><code>int, default=3</code></td>
+<td style="text-align: left;">Degree of the polynomial kernel function (<code>'poly'</code>). Ignored by other kernels.</td>
+<td style="text-align: left;">Positive integer: <code>2</code>, <code>3</code>, <code>4</code>, <code>5</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>coef0</code></td>
+<td style="text-align: left;"><code>float, default=0.0</code></td>
+<td style="text-align: left;">Independent term $r$ in polynomial and sigmoid kernels.</td>
+<td style="text-align: left;">Float (e.g. <code>0.0</code>, <code>1.0</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>shrinking</code></td>
+<td style="text-align: left;"><code>bool, default=True</code></td>
+<td style="text-align: left;">Whether to use the shrinking heuristic in Sequential Minimal Optimization (SMO) solver.</td>
+<td style="text-align: left;"><code>True</code>, <code>False</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>probability</code></td>
+<td style="text-align: left;"><code>bool, default=False</code></td>
+<td style="text-align: left;">Whether to enable probability estimates using Platt scaling.</td>
+<td style="text-align: left;"><code>True</code>, <code>False</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>tol</code></td>
+<td style="text-align: left;"><code>float, default=1e-3</code></td>
+<td style="text-align: left;">Tolerance for stopping criterion in the optimization solver.</td>
+<td style="text-align: left;">Positive float: <code>1e-3</code>, <code>1e-4</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>class_weight</code></td>
+<td style="text-align: left;"><code>dict or 'balanced', default=None</code></td>
+<td style="text-align: left;">Multipliers $C_k = C \times w_k$ for handling class imbalance.</td>
+<td style="text-align: left;"><code>None</code>, <code>'balanced'</code>, or dict</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>max_iter</code></td>
+<td style="text-align: left;"><code>int, default=-1</code></td>
+<td style="text-align: left;">Hard limit on iterations within solver, or <code>-1</code> for no limit.</td>
+<td style="text-align: left;"><code>-1</code> or positive int</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>random_state</code></td>
+<td style="text-align: left;"><code>int, default=None</code></td>
+<td style="text-align: left;">Seed for internal probability calibration (Platt scaling).</td>
+<td style="text-align: left;">Any integer (we use <code>42</code>)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-parameter-sensitivity-analysis">3. Parameter Sensitivity Analysis</h2>
+<h3 id="31-what-happens-when-c-changes">3.1 What happens when <code>C</code> changes?</h3>
+<ul>
+<li><strong><code>C</code> is very small (<code>0.01</code> to <code>0.1</code>) — Large Margin / Soft Penalty:</strong></li>
+<li>The optimizer tolerates many misclassifications ($\xi_i$) in exchange for a wide, simple margin.</li>
+<li><strong>Risk:</strong> <strong>Underfitting</strong>. The model may ignore subtle income boundaries and predict the majority class.</li>
+<li><strong><code>C = 1.0</code> (Our Tuned Setting):</strong></li>
+<li>Balances misclassification penalties with boundary complexity.</li>
+<li><strong>Result:</strong> <strong>84.55% test accuracy</strong>, robust to noisy applicant records.</li>
+<li><strong><code>C</code> is very large (<code>100</code> to <code>1000</code>) — Hard Margin / Strict Penalty:</strong></li>
+<li>The model imposes an immense penalty for every misclassified applicant. The margin shrinks tightly around training points.</li>
+<li><strong>Risk:</strong> <strong>Severe Overfitting</strong>. Any noisy applicant or outlier bends the decision boundary radically.</li>
+</ul>
+<hr />
+<h3 id="32-what-happens-when-gamma-changes-for-rbf-kernel">3.2 What happens when <code>gamma</code> changes (for RBF kernel)?</h3>
+<p><code>gamma</code> ($\gamma$) determines how far the influence of a single training point reaches.
+$$\gamma = \frac{1}{2\sigma^2}$$</p>
+<ul>
+<li><strong><code>gamma='scale'</code> (Default &amp; Recommended):</strong></li>
+<li>Automatically sets $\gamma = \frac{1}{n_{\text{features}} \times \text{Var}(X)}$.</li>
+<li>Gives a well-behaved, smooth Gaussian bell curve around support vectors.</li>
+<li><strong><code>gamma</code> is very small (<code>0.001</code>):</strong></li>
+<li>The Gaussian bell has a huge radius $\sigma$. A support vector's influence spreads across the entire dataset.</li>
+<li>The boundary becomes nearly linear, acting like a flat plane.</li>
+<li><strong><code>gamma</code> is very high (<code>10.0</code> or <code>100.0</code>):</strong></li>
+<li>The Gaussian radius is tiny. Each support vector creates a tiny, isolated "island" of decision boundary around itself.</li>
+<li><strong>Result:</strong> Training accuracy approaches 100%, but test accuracy collapses because any unseen applicant falling outside the islands is misclassified.</li>
+</ul>
+<hr />
+<h3 id="33-what-happens-when-kernel-changes">3.3 What happens when <code>kernel</code> changes?</h3>
+<ul>
+<li><strong><code>kernel='rbf'</code> (Our Setting):</strong></li>
+<li>Universal function approximator. Can capture complex non-linear curves (e.g. high loan amount acceptable <em>only if</em> credit history is 1 AND income is above threshold).</li>
+<li>Outperforms linear kernel when feature interactions exist.</li>
+<li><strong><code>kernel='linear'</code>:</strong></li>
+<li>Simple flat hyperplane. Very fast, but identical in geometric shape to Logistic Regression.</li>
+<li><strong><code>kernel='poly'</code>:</strong></li>
+<li>Fits polynomial curves. Highly sensitive to <code>degree</code> and <code>C</code>; easily overfits on small sample sizes ($N=614$).</li>
+</ul>
+<hr />
+<h3 id="34-what-is-probabilitytrue-and-why-is-it-important">3.4 What is <code>probability=True</code> and why is it important?</h3>
+<p>Standard SVM calculates a distance to the hyperplane $f(\mathbf{x}) = \mathbf{w}^T \Phi(\mathbf{x}) + b$, not a probability.
+* When <code>probability=True</code>, scikit-learn uses <strong>Platt Scaling</strong>: it fits an internal 5-fold cross-validated logistic regression on the SVM decision values:
+  $$P(Y=1 \mid \mathbf{x}) = \frac{1}{1 + \exp(A \cdot f(\mathbf{x}) + B)}$$
+* <strong>Why we enabled it:</strong> This allows us to output calibrated approval probabilities (e.g., 85.2% confidence) and compute <strong>ROC-AUC curves</strong>.</p>
+<hr />
+<h2 id="4-our-chosen-configuration-for-hdfc-loan-data">4. Our Chosen Configuration for HDFC Loan Data</h2>
+<pre><code class="language-python">model = SVC(
+    C=1.0,               # Balanced soft-margin regularization
+    kernel='rbf',        # Non-linear Radial Basis Function
+    gamma='scale',       # Auto-calibrated kernel bandwidth
+    probability=True,    # Platt scaling for probability estimates &amp; ROC-AUC
+    random_state=42      # Reproducibility
+)
+</code></pre>
+<h3 id="performance-on-hdfc-dataset">Performance on HDFC Dataset:</h3>
+<ul>
+<li><strong>5-Fold Cross-Validation Accuracy:</strong> <code>79.22% (+/- 4.75%)</code></li>
+<li><strong>Test Set Accuracy:</strong> <code>84.55%</code></li>
+<li><strong>Precision:</strong> <code>0.8235</code></li>
+<li><strong>Recall:</strong> <code>0.9882</code> (Catches 98.8% of creditworthy customers)</li>
+<li><strong>F1-Score:</strong> <code>0.8984</code></li>
+<li><strong>ROC-AUC:</strong> <code>0.8034</code></li>
+</ul>
+<hr />
+<h2 id="5-support-vector-mechanics-on-hdfc-dataset">5. Support Vector Mechanics on HDFC Dataset</h2>
+<p>In our trained model:
+* <strong>Total Training Instances:</strong> 491
+* <strong>Total Support Vectors Identified:</strong> <strong>292</strong> (59.5% of data)
+  * Support Vectors for Class 0 (Rejected): <strong>129</strong>
+  * Support Vectors for Class 1 (Approved): <strong>163</strong></p>
+<h3 id="leaders-viva-explanation">Leader's Viva Explanation:</h3>
+<blockquote>
+<p><em>"Only the support vectors determine the position of the separating hyperplane. If you deleted the other 199 applicants who lie safely away from the margin, the trained SVM model would remain 100% identical! Support vectors are the critical borderline applications where loan decisions are hardest to make."</em></p>
+</blockquote>
+<hr />
+<h2 id="6-why-feature-scaling-is-critical-for-svm">6. Why Feature Scaling is Critical for SVM</h2>
+<p>Unlike Decision Trees, <strong>SVM is catastrophically sensitive to feature scaling</strong>:
+* SVM computes Euclidean distances between vectors: $|\mathbf{x}<em>i - \mathbf{x}_j|^2 = \sum_k (x</em>{ik} - x_{jk})^2$.
+* If <code>ApplicantIncome</code> is ₹50,000 and <code>Credit_History</code> is 1.0:
+  * Difference in income: $(50,000 - 45,000)^2 = 25,000,000$
+  * Difference in credit: $(1 - 0)^2 = 1$
+* Without <code>StandardScaler</code>, the distance calculation is <strong>99.9999% dominated by income</strong>, completely masking the most important banking feature (<code>Credit_History</code>).
+* When we scale features to mean=0, std=1, every feature contributes proportionally according to its variance.</p>
+<hr />
+<h2 id="7-top-viva-questions-model-answers-on-parameters">7. Top Viva Questions &amp; Model Answers on Parameters</h2>
+<h3 id="q1-what-is-the-physicalgeometric-meaning-of-the-parameter-c-in-svm">Q1: What is the physical/geometric meaning of the parameter $C$ in SVM?</h3>
+<p><strong>Model Answer:</strong>  </p>
+<blockquote>
+<p><em>"$C$ is the penalty weight on the slack variables $\xi_i$ in the soft-margin objective function. Geometrically, it controls the trade-off between margin width and classification errors. A small $C$ allows more margin violations (softer margin, simpler boundary, lower variance). A large $C$ strictly penalizes any point entering the margin (harder margin, complex boundary, higher risk of overfitting). We used $C=1.0$."</em></p>
+</blockquote>
+<h3 id="q2-how-does-the-rbf-kernel-map-data-into-infinite-dimensions">Q2: How does the RBF kernel map data into infinite dimensions?</h3>
+<p><strong>Model Answer:</strong>  </p>
+<blockquote>
+<p><em>"The RBF kernel uses the exponential function $\exp(-\gamma |\mathbf{x} - \mathbf{z}|^2)$. By Taylor series expansion, $e^u = 1 + u + \frac{u^2}{2!} + \frac{u^3}{3!} + \dots$, the exponential can be represented as an infinite sum of polynomial basis terms. The kernel trick computes the inner product in this infinite-dimensional Hilbert space directly using a simple scalar distance computation in original input space."</em></p>
+</blockquote>
+<h3 id="q3-what-happens-if-gamma-is-set-too-high-in-an-rbf-kernel">Q3: What happens if <code>gamma</code> is set too high in an RBF kernel?</h3>
+<p><strong>Model Answer:</strong>  </p>
+<blockquote>
+<p><em>"When <code>gamma</code> is extremely large, the radius of the Gaussian kernel shrinks to near zero. Each support vector exerts influence only in its immediate vicinity, creating tiny circular decision bubbles around individual training points. This causes severe overfitting—training accuracy hits 100%, but test accuracy collapses because any unseen applicant falls in the unassigned background space."</em></p>
+</blockquote>
+<h3 id="q4-why-does-svm-take-longer-to-train-on-very-large-datasets-compared-to-logistic-regression">Q4: Why does SVM take longer to train on very large datasets compared to Logistic Regression?</h3>
+<p><strong>Model Answer:</strong>  </p>
+<blockquote>
+<p><em>"Training an SVM requires solving a quadratic programming optimization problem (Sequential Minimal Optimization). Its computational complexity scales between $O(N^2)$ and $O(N^3)$ with respect to the number of training samples $N$. For our 614-row dataset, training takes less than 0.1 seconds, but on 1,000,000 rows, standard SVM becomes computationally prohibitive without specialized linear approximations."</em></p>
+</blockquote>
+        <div class="footer">
+            HDFC Bank Loan Approval Classification Project | Built for AI for Engineers
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code & Parameters Deep Dive — HDFC Bank AI Project</title>
+    
+    <!-- MathJax for rendering LaTeX formulas -->
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            line-height: 1.65;
+            color: #24292f;
+            background-color: #f6f8fa;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #0d47a1;
+            color: white;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar h2 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+        .nav-links a {
+            color: #e3f2fd;
+            text-decoration: none;
+            margin-left: 16px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .nav-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 980px;
+            margin: 30px auto;
+            background: #ffffff;
+            padding: 45px 55px;
+            border-radius: 8px;
+            border: 1px solid #d0d7de;
+            box-shadow: 0 3px 12px rgba(140, 149, 159, 0.15);
+        }
+        h1, h2, h3, h4 {
+            color: #1a202c;
+            font-weight: 600;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            line-height: 1.25;
+        }
+        h1 {
+            font-size: 2rem;
+            border-bottom: 2px solid #eaecef;
+            padding-bottom: 10px;
+            color: #0d47a1;
+        }
+        h2 {
+            font-size: 1.5rem;
+            border-bottom: 1px solid #eaecef;
+            padding-bottom: 8px;
+            margin-top: 32px;
+        }
+        h3 {
+            font-size: 1.25rem;
+        }
+        p, ul, ol {
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-size: 1rem;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            display: table;
+            font-size: 0.92rem;
+        }
+        th, td {
+            border: 1px solid #d0d7de;
+            padding: 10px 14px;
+            text-align: left;
+        }
+        th {
+            background-color: #f3f4f6;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        code {
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+            background-color: rgba(175, 184, 193, 0.2);
+            padding: 0.2em 0.4em;
+            border-radius: 6px;
+            font-size: 85%;
+            color: #b91c1c;
+        }
+        pre {
+            background-color: #1e293b;
+            color: #f8fafc;
+            padding: 16px;
+            border-radius: 8px;
+            overflow: auto;
+            font-size: 88%;
+            line-height: 1.45;
+        }
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+        }
+        blockquote {
+            margin: 16px 0;
+            padding: 12px 18px;
+            border-left: 4px solid #2563eb;
+            background-color: #eff6ff;
+            color: #1e3a8a;
+            border-radius: 0 6px 6px 0;
+        }
+        blockquote p {
+            margin: 0;
+        }
+        /* MathJax equation display formatting */
+        .MathJax {
+            font-size: 1.15em !important;
+            color: #0f172a;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+        @media print {
+            .navbar { display: none; }
+            .container { border: none; box-shadow: none; margin: 0; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h2>🏦 HDFC Bank Loan Prediction — AI Project Manual</h2>
+        <div class="nav-links">
+            <a href="INDEX.html">📑 All Documents</a>
+            <a href="PROJECT_PLAN.html">Project Plan</a>
+            <a href="LEADERS_VIVA_GUIDE.html">Viva Guide</a>
+            <a href="PARAMETERS_CHEAT_SHEET.html">Cheat Sheet</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1 id="code-explanation-guide-hdfc-bank-loan-approval-prediction">Code Explanation Guide — HDFC Bank Loan Approval Prediction</h1>
+<blockquote>
+<p><strong>Purpose:</strong> This document explains every code file, every function, every parameter, and what happens when you change things. Read this to understand the code inside-out so you can modify, debug, and explain it confidently.</p>
+</blockquote>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#1-file-structure-overview">File Structure Overview</a></li>
+<li><a href="#2-imports--what-each-library-does">Imports — What Each Library Does</a></li>
+<li><a href="#3-data-loading--initial-exploration">Data Loading &amp; Initial Exploration</a></li>
+<li><a href="#4-exploratory-data-analysis-eda">Exploratory Data Analysis (EDA)</a></li>
+<li><a href="#5-data-preprocessing">Data Preprocessing</a></li>
+<li><a href="#6-feature-engineering">Feature Engineering</a></li>
+<li><a href="#7-encoding--scaling">Encoding &amp; Scaling</a></li>
+<li><a href="#8-train-test-split">Train-Test Split</a></li>
+<li><a href="#9-model-training">Model Training</a></li>
+<li><a href="#10-model-evaluation">Model Evaluation</a></li>
+<li><a href="#11-model-saving--loading">Model Saving &amp; Loading</a></li>
+<li><a href="#12-parameter-sensitivity-guide--what-happens-when-you-change">Parameter Sensitivity Guide — What Happens When You Change...</a></li>
+<li><a href="#13-common-errors--fixes">Common Errors &amp; Fixes</a></li>
+</ol>
+<hr />
+<h2 id="1-file-structure-overview">1. File Structure Overview</h2>
+<pre><code>notebooks/
+├── 01_eda.ipynb              # Exploratory Data Analysis — plots, insights
+├── 02_preprocessing.ipynb    # Cleaning, encoding, feature engineering
+└── 03_modeling.ipynb         # Model training, evaluation, comparison
+</code></pre>
+<p>Or if using a single file:</p>
+<pre><code>loan_prediction.py            # Complete pipeline in one script
+</code></pre>
+<hr />
+<h2 id="2-imports-what-each-library-does">2. Imports — What Each Library Does</h2>
+<pre><code class="language-python">import pandas as pd                  # Data manipulation (DataFrames, CSV reading)
+import numpy as np                   # Numerical operations (arrays, math functions)
+import matplotlib.pyplot as plt      # Basic plotting (figures, axes, show)
+import seaborn as sns                # Statistical visualization (heatmaps, countplots)
+import warnings                      # Suppress unnecessary warnings
+warnings.filterwarnings('ignore')
+
+from sklearn.model_selection import train_test_split    # Split data into train/test
+from sklearn.model_selection import cross_val_score     # K-fold cross-validation
+from sklearn.preprocessing import LabelEncoder          # Convert categories → numbers
+from sklearn.preprocessing import StandardScaler        # Standardize features (mean=0, std=1)
+
+from sklearn.linear_model import LogisticRegression     # Logistic Regression model
+from sklearn.tree import DecisionTreeClassifier         # Decision Tree model
+from sklearn.ensemble import RandomForestClassifier     # Random Forest model
+from sklearn.svm import SVC                             # Support Vector Machine model
+
+from sklearn.metrics import accuracy_score              # Overall accuracy
+from sklearn.metrics import confusion_matrix            # TP, TN, FP, FN matrix
+from sklearn.metrics import classification_report       # Precision, Recall, F1 per class
+from sklearn.metrics import roc_auc_score               # ROC-AUC score
+from sklearn.metrics import roc_curve                   # ROC curve data points
+
+import joblib                                           # Save/load trained models
+</code></pre>
+<p><strong>What happens if you remove an import:</strong>
+- Remove <code>pandas</code> → cannot read CSV or work with DataFrames. Everything breaks.
+- Remove <code>seaborn</code> → only affects visualizations. Model still works.
+- Remove <code>StandardScaler</code> → SVM and Logistic Regression may perform worse (unscaled features).
+- Remove <code>joblib</code> → cannot save/load models. Only affects deployment, not training.</p>
+<hr />
+<h2 id="3-data-loading-initial-exploration">3. Data Loading &amp; Initial Exploration</h2>
+<pre><code class="language-python"># Load the dataset
+df = pd.read_csv('data/loan_data.csv')
+
+# Basic exploration
+print(df.shape)                    # (614, 13) — 614 rows, 13 columns
+print(df.head())                   # First 5 rows
+print(df.info())                   # Column names, dtypes, non-null counts
+print(df.describe())               # Statistics for numerical columns (mean, std, min, max)
+print(df.isnull().sum())           # Count of missing values per column
+print(df['Loan_Status'].value_counts())  # Class distribution
+</code></pre>
+<h3 id="parameter-explanations">Parameter Explanations</h3>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What It Does</th>
+<th>What Changes If You Modify It</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pd.read_csv('path')</code></td>
+<td>Reads a CSV file into a DataFrame</td>
+<td>Change path → reads a different file. Wrong path → <code>FileNotFoundError</code></td>
+</tr>
+<tr>
+<td><code>df.shape</code></td>
+<td>Returns (rows, columns) tuple</td>
+<td>Read-only, no parameters to change</td>
+</tr>
+<tr>
+<td><code>df.head()</code></td>
+<td>Shows first 5 rows</td>
+<td><code>df.head(10)</code> → shows first 10 rows. Cosmetic only.</td>
+</tr>
+<tr>
+<td><code>df.info()</code></td>
+<td>Shows dtypes, non-null counts</td>
+<td>No parameters that affect data</td>
+</tr>
+<tr>
+<td><code>df.describe()</code></td>
+<td>Stats for numerical columns</td>
+<td><code>df.describe(include='all')</code> → includes categorical columns too</td>
+</tr>
+<tr>
+<td><code>df.isnull().sum()</code></td>
+<td>Counts NaN per column</td>
+<td>Read-only</td>
+</tr>
+<tr>
+<td><code>value_counts()</code></td>
+<td>Counts unique values</td>
+<td><code>normalize=True</code> → shows proportions instead of counts</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-exploratory-data-analysis-eda">4. Exploratory Data Analysis (EDA)</h2>
+<h3 id="41-categorical-feature-distribution">4.1 Categorical Feature Distribution</h3>
+<pre><code class="language-python"># Count plot for Loan_Status
+sns.countplot(x='Loan_Status', data=df)
+plt.title('Loan Status Distribution')
+plt.show()
+</code></pre>
+<p><strong>What this shows:</strong> The bar chart will show ~422 Approved (Y) vs. ~192 Rejected (N) — confirming class imbalance.</p>
+<h3 id="42-feature-vs-target-analysis">4.2 Feature vs. Target Analysis</h3>
+<pre><code class="language-python"># How each categorical feature relates to Loan_Status
+categorical_cols = ['Gender', 'Married', 'Dependents', 'Education', 
+                    'Self_Employed', 'Property_Area']
+
+for col in categorical_cols:
+    pd.crosstab(df[col], df['Loan_Status']).plot(kind='bar', stacked=True)
+    plt.title(f'{col} vs Loan Status')
+    plt.show()
+</code></pre>
+<p><strong>What this shows:</strong> Stacked bar charts showing approval/rejection rates for each category. Key insight: <code>Credit_History=1</code> has dramatically higher approval rate.</p>
+<h3 id="43-correlation-heatmap">4.3 Correlation Heatmap</h3>
+<pre><code class="language-python"># Correlation matrix for numerical features
+sns.heatmap(df.corr(), annot=True, cmap='coolwarm', fmt='.2f')
+plt.title('Feature Correlation Heatmap')
+plt.show()
+</code></pre>
+<p><strong>What this shows:</strong> How features correlate with each other. <code>Credit_History</code> will show the strongest correlation with <code>Loan_Status</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>What It Does</th>
+<th>What Happens If Changed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>annot=True</code></td>
+<td>Shows correlation values on cells</td>
+<td><code>False</code> → just colors, no numbers</td>
+</tr>
+<tr>
+<td><code>cmap='coolwarm'</code></td>
+<td>Color palette (blue-red)</td>
+<td>Change to <code>'viridis'</code>, <code>'RdYlGn'</code>, etc. — aesthetic only</td>
+</tr>
+<tr>
+<td><code>fmt='.2f'</code></td>
+<td>Format to 2 decimal places</td>
+<td><code>'.3f'</code> → 3 decimal places</td>
+</tr>
+</tbody>
+</table>
+<h3 id="44-outlier-detection">4.4 Outlier Detection</h3>
+<pre><code class="language-python"># Box plot for ApplicantIncome
+sns.boxplot(x='ApplicantIncome', data=df)
+plt.title('Applicant Income - Outlier Detection')
+plt.show()
+</code></pre>
+<p><strong>What this shows:</strong> Box extends from Q1 to Q3 (interquartile range). Whiskers extend to 1.5×IQR. Points beyond whiskers are <strong>outliers</strong>. You'll see many outlier dots for high incomes.</p>
+<hr />
+<h2 id="5-data-preprocessing">5. Data Preprocessing</h2>
+<h3 id="51-drop-loan_id">5.1 Drop Loan_ID</h3>
+<pre><code class="language-python">df = df.drop('Loan_ID', axis=1)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Meaning</th>
+<th>What Happens If Changed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>'Loan_ID'</code></td>
+<td>Column to drop</td>
+<td>Drop a different column → lose that feature</td>
+</tr>
+<tr>
+<td><code>axis=1</code></td>
+<td>Drop a column (not a row)</td>
+<td><code>axis=0</code> → tries to drop a ROW named 'Loan_ID' → error</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why drop it:</strong> <code>Loan_ID</code> is unique per row — it's an identifier, not a predictor. If kept, a Decision Tree might memorize specific IDs → severe overfitting.</p>
+<h3 id="52-handle-missing-values">5.2 Handle Missing Values</h3>
+<pre><code class="language-python"># Categorical columns — fill with MODE (most frequent value)
+categorical_cols = ['Gender', 'Married', 'Dependents', 'Self_Employed']
+for col in categorical_cols:
+    df[col].fillna(df[col].mode()[0], inplace=True)
+
+# Numerical columns — fill with MEDIAN
+numerical_cols = ['LoanAmount', 'Loan_Amount_Term', 'Credit_History']
+for col in numerical_cols:
+    df[col].fillna(df[col].median(), inplace=True)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Meaning</th>
+<th>What Happens If Changed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mode()[0]</code></td>
+<td>Most frequent value. <code>[0]</code> because mode() returns a Series</td>
+<td>Use <code>mode()[1]</code> → second most frequent (probably wrong). Remove <code>[0]</code> → TypeError</td>
+</tr>
+<tr>
+<td><code>median()</code></td>
+<td>Middle value of the distribution</td>
+<td>Use <code>mean()</code> instead → sensitive to outliers. High-income outliers drag the mean up → inflated imputation values → model sees artificially higher incomes</td>
+</tr>
+<tr>
+<td><code>inplace=True</code></td>
+<td>Modify the DataFrame directly</td>
+<td><code>inplace=False</code> → returns a new DataFrame, original unchanged. If you forget <code>inplace=True</code> and don't assign result → <strong>data still has NaNs</strong> (common bug!)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What happens if you skip this step entirely:</strong>
+- Most sklearn models <strong>crash</strong> on NaN values with <code>ValueError: Input contains NaN</code>.
+- Decision Trees in some implementations handle NaN, but it's unreliable.</p>
+<h3 id="53-handle-outliers-log-transformation">5.3 Handle Outliers (Log Transformation)</h3>
+<pre><code class="language-python"># Log transform skewed numerical columns
+df['ApplicantIncome'] = np.log1p(df['ApplicantIncome'])
+df['CoapplicantIncome'] = np.log1p(df['CoapplicantIncome'])
+df['LoanAmount'] = np.log1p(df['LoanAmount'])
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>What It Does</th>
+<th>What Happens If Changed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>np.log1p(x)</code></td>
+<td>Computes <code>ln(1 + x)</code>. The <code>1+</code> prevents <code>log(0) = -infinity</code></td>
+<td>Use <code>np.log(x)</code> → crashes if any value is 0 (co-applicant income often = 0)</td>
+</tr>
+<tr>
+<td>Skip this step</td>
+<td>Skewed data remains skewed</td>
+<td>Logistic Regression and SVM performance drops. Random Forest/Decision Tree are unaffected (they split on rank, not magnitude)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Visual effect:</strong> Before log transform, income distribution is heavily right-skewed (long tail). After, it's approximately normal/bell-shaped.</p>
+<hr />
+<h2 id="6-feature-engineering">6. Feature Engineering</h2>
+<pre><code class="language-python"># Create new features
+df['TotalIncome'] = df['ApplicantIncome'] + df['CoapplicantIncome']
+df['LoanAmountPerMonth'] = df['LoanAmount'] / df['Loan_Amount_Term']
+df['IncomeToLoanRatio'] = df['TotalIncome'] / df['LoanAmount']
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Formula</th>
+<th>What It Captures</th>
+<th>What Happens If Removed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TotalIncome</code></td>
+<td>Applicant + Coapplicant Income</td>
+<td>Household financial capacity</td>
+<td>Accuracy may drop 1-2%. Model misses joint income signal</td>
+</tr>
+<tr>
+<td><code>LoanAmountPerMonth</code></td>
+<td>LoanAmount / Term</td>
+<td>Monthly EMI burden</td>
+<td>Minor impact. Useful for interpretability</td>
+</tr>
+<tr>
+<td><code>IncomeToLoanRatio</code></td>
+<td>TotalIncome / LoanAmount</td>
+<td>Debt-to-income ratio — key banking metric</td>
+<td>Accuracy may drop slightly. Loses a powerful financial indicator</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Important note:</strong> If you log-transformed income and loan amount BEFORE creating these features, the features are computed on log values. This is mathematically fine but changes interpretation. If you want raw ratios, create features BEFORE log transform.</p>
+<p><strong>What if <code>LoanAmount</code> is 0?</strong> <code>IncomeToLoanRatio</code> becomes infinity → model crashes. Add a safety check:</p>
+<pre><code class="language-python">df['IncomeToLoanRatio'] = df['TotalIncome'] / df['LoanAmount'].replace(0, 0.001)
+</code></pre>
+<hr />
+<h2 id="7-encoding-scaling">7. Encoding &amp; Scaling</h2>
+<h3 id="71-label-encoding">7.1 Label Encoding</h3>
+<pre><code class="language-python">le = LabelEncoder()
+
+# Encode binary categorical columns
+binary_cols = ['Gender', 'Married', 'Education', 'Self_Employed', 'Loan_Status']
+for col in binary_cols:
+    df[col] = le.fit_transform(df[col])
+
+# Encode multi-class columns
+df['Dependents'] = df['Dependents'].replace('3+', 3).astype(int)
+df['Property_Area'] = le.fit_transform(df['Property_Area'])
+</code></pre>
+<p><strong>How Label Encoding works:</strong>
+- Sorts unique values alphabetically → assigns 0, 1, 2...
+- <code>Gender</code>: Female → 0, Male → 1
+- <code>Married</code>: No → 0, Yes → 1
+- <code>Education</code>: Graduate → 0, Not Graduate → 1
+- <code>Loan_Status</code>: N → 0, Y → 1
+- <code>Property_Area</code>: Rural → 0, Semiurban → 1, Urban → 2</p>
+<table>
+<thead>
+<tr>
+<th>What Happens If...</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>You use <code>le.transform()</code> instead of <code>le.fit_transform()</code></td>
+<td>Crashes if encoder hasn't been fit yet. <code>fit_transform</code> = fit + transform in one step</td>
+</tr>
+<tr>
+<td>You encode <code>Loan_Status</code> as Y→0, N→1 (reversed)</td>
+<td>Model still works but predictions are flipped! "1" now means Rejected. Very confusing. Always verify encoding</td>
+</tr>
+<tr>
+<td>You don't encode <code>Property_Area</code></td>
+<td><code>ValueError: could not convert string to float</code> — model can't handle text</td>
+</tr>
+<tr>
+<td>You use One-Hot instead of Label for Property_Area</td>
+<td>Creates 3 columns (Rural, Semiurban, Urban) instead of 1. Adds features. May slightly improve linear model performance</td>
+</tr>
+<tr>
+<td>You reuse the same <code>le</code> object for multiple columns</td>
+<td>Each <code>fit_transform</code> call refits the encoder. The encoder only "remembers" the last column. This is fine for training but problematic if you need to inverse_transform later</td>
+</tr>
+</tbody>
+</table>
+<h3 id="72-feature-scaling">7.2 Feature Scaling</h3>
+<pre><code class="language-python">scaler = StandardScaler()
+
+# Define features (X) and target (y)
+X = df.drop('Loan_Status', axis=1)
+y = df['Loan_Status']
+
+# Scale only numerical columns (or all features)
+cols_to_scale = ['ApplicantIncome', 'CoapplicantIncome', 'LoanAmount', 
+                 'Loan_Amount_Term', 'TotalIncome', 'LoanAmountPerMonth', 
+                 'IncomeToLoanRatio']
+X[cols_to_scale] = scaler.fit_transform(X[cols_to_scale])
+</code></pre>
+<p><strong>How StandardScaler works:</strong>
+- For each feature: <code>z = (value - mean) / standard_deviation</code>
+- After scaling: mean ≈ 0, std ≈ 1
+- Example: Income 5000 with mean 5800 and std 3000 → z = (5000-5800)/3000 = -0.27</p>
+<table>
+<thead>
+<tr>
+<th>What Happens If...</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>You skip scaling entirely</td>
+<td>Logistic Regression/SVM performance drops significantly (income in thousands dominates Credit_History in 0/1). Random Forest/Decision Tree unaffected</td>
+</tr>
+<tr>
+<td>You scale the target variable <code>y</code></td>
+<td><strong>DISASTER.</strong> Binary 0/1 labels become -1.0/1.0 or some other values. Classification breaks completely. <strong>Never scale the target.</strong></td>
+</tr>
+<tr>
+<td>You use <code>MinMaxScaler</code> instead</td>
+<td>Scales to [0, 1] range instead of mean=0/std=1. Works fine, just different. StandardScaler is more common</td>
+</tr>
+<tr>
+<td>You fit scaler on test data too</td>
+<td><strong>Data leakage!</strong> Scaler learns statistics from test data → model has unfair advantage → inflated metrics. Always <code>fit</code> on train, <code>transform</code> on test</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="8-train-test-split">8. Train-Test Split</h2>
+<pre><code class="language-python">X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+<th>What It Does</th>
+<th>What Happens If Changed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>test_size</code></td>
+<td><code>0.2</code></td>
+<td>20% of data for testing (≈123 rows), 80% for training (≈491 rows)</td>
+<td><code>0.3</code> → 30% test (184 rows), 70% train (430 rows). More test data = more reliable evaluation but less training data</td>
+</tr>
+<tr>
+<td><code>random_state</code></td>
+<td><code>42</code></td>
+<td>Seed for reproducibility. Same split every run</td>
+<td>Change to <code>0</code> or <code>123</code> → different split → slightly different results. Remove entirely → random split each run, results vary</td>
+</tr>
+<tr>
+<td><code>stratify</code></td>
+<td><code>y</code></td>
+<td>Preserves class ratio in both splits (69/31 in both train and test)</td>
+<td>Remove <code>stratify</code> → random split might give 80/20 in train and 50/50 in test (or worse), making evaluation misleading</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What happens if <code>test_size=0.01</code>?</strong> Only ~6 rows for testing. Evaluation is meaningless — one wrong prediction changes accuracy by 17%.</p>
+<p><strong>What happens if <code>test_size=0.5</code>?</strong> Only 307 rows for training. Model doesn't have enough data to learn well. Underfitting.</p>
+<hr />
+<h2 id="9-model-training">9. Model Training</h2>
+<h3 id="91-logistic-regression">9.1 Logistic Regression</h3>
+<pre><code class="language-python">lr = LogisticRegression(
+    C=1.0,             # Regularization strength (inverse). Higher = less regularization
+    max_iter=1000,     # Max iterations for convergence
+    solver='lbfgs',    # Optimization algorithm
+    random_state=42
+)
+lr.fit(X_train, y_train)
+lr_pred = lr.predict(X_test)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>What It Does</th>
+<th>What Happens If Changed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>C</code></td>
+<td><code>1.0</code></td>
+<td>Inverse regularization. Higher C = less regularization</td>
+<td><code>C=0.01</code> → very strong regularization, simpler model, might underfit. <code>C=100</code> → very weak regularization, complex model, might overfit</td>
+</tr>
+<tr>
+<td><code>max_iter</code></td>
+<td><code>100</code></td>
+<td>Maximum number of optimization iterations</td>
+<td><code>100</code> → might not converge → <code>ConvergenceWarning</code>. Set to <code>1000</code> or <code>5000</code> to be safe. Too high = slower but no harm</td>
+</tr>
+<tr>
+<td><code>solver</code></td>
+<td><code>'lbfgs'</code></td>
+<td>Algorithm to find optimal weights</td>
+<td><code>'liblinear'</code> → better for small datasets, supports L1 regularization. <code>'saga'</code> → for large datasets. For our size, doesn't matter much</td>
+</tr>
+<tr>
+<td><code>penalty</code></td>
+<td><code>'l2'</code></td>
+<td>Type of regularization</td>
+<td><code>'l1'</code> → Lasso, can zero out unimportant features. <code>'none'</code> → no regularization, risk overfitting</td>
+</tr>
+</tbody>
+</table>
+<h3 id="92-decision-tree">9.2 Decision Tree</h3>
+<pre><code class="language-python">dt = DecisionTreeClassifier(
+    max_depth=5,            # Maximum tree depth
+    min_samples_split=10,   # Minimum samples needed to split a node
+    min_samples_leaf=5,     # Minimum samples in a leaf node
+    criterion='gini',       # Split quality measure
+    random_state=42
+)
+dt.fit(X_train, y_train)
+dt_pred = dt.predict(X_test)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>What It Does</th>
+<th>What Happens If Changed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>max_depth</code></td>
+<td><code>None</code> (unlimited)</td>
+<td>Maximum levels the tree can grow</td>
+<td><code>None</code> → tree grows until pure leaves → <strong>overfitting!</strong> Training accuracy = 100%, test = 65%. Set to <code>3-7</code> for this dataset</td>
+</tr>
+<tr>
+<td><code>min_samples_split</code></td>
+<td><code>2</code></td>
+<td>Minimum samples needed before splitting a node</td>
+<td>Increase to <code>10</code>, <code>20</code> → fewer splits → simpler tree → less overfitting</td>
+</tr>
+<tr>
+<td><code>min_samples_leaf</code></td>
+<td><code>1</code></td>
+<td>Minimum samples required in each leaf node</td>
+<td>Increase → prevents tiny leaves with 1-2 samples → reduces overfitting</td>
+</tr>
+<tr>
+<td><code>criterion</code></td>
+<td><code>'gini'</code></td>
+<td>How to measure split quality</td>
+<td><code>'entropy'</code> → uses information gain instead of Gini impurity. Usually gives nearly identical results. Gini is slightly faster</td>
+</tr>
+<tr>
+<td><code>max_depth=None</code></td>
+<td>Unlimited</td>
+<td><strong>THIS IS THE MAIN OVERFITTING RISK</strong></td>
+<td>Always set this. <code>max_depth=3</code> → underfitting. <code>max_depth=20</code> → overfitting. Sweet spot: <code>5-8</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Critical experiment:</strong> Train with <code>max_depth=None</code> and note training vs. test accuracy. Training will be ~95-100%, test will be ~65-70%. Then train with <code>max_depth=5</code> and watch the gap close. This demonstrates overfitting beautifully — great for viva.</p>
+<h3 id="93-random-forest">9.3 Random Forest</h3>
+<pre><code class="language-python">rf = RandomForestClassifier(
+    n_estimators=100,       # Number of trees in the forest
+    max_depth=10,           # Max depth of each tree
+    max_features='sqrt',    # Features considered at each split
+    min_samples_split=5,
+    min_samples_leaf=2,
+    random_state=42,
+    n_jobs=-1               # Use all CPU cores for parallel training
+)
+rf.fit(X_train, y_train)
+rf_pred = rf.predict(X_test)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>What It Does</th>
+<th>What Happens If Changed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>n_estimators</code></td>
+<td><code>100</code></td>
+<td>Number of trees</td>
+<td><code>10</code> → fewer trees, faster but less stable. <code>500</code> → more trees, slower but slightly better and more stable. Diminishing returns after ~200</td>
+</tr>
+<tr>
+<td><code>max_depth</code></td>
+<td><code>None</code></td>
+<td>Max depth of each tree</td>
+<td><code>None</code> → each tree can overfit, but forest averages it out. Setting <code>5-15</code> adds extra safety</td>
+</tr>
+<tr>
+<td><code>max_features</code></td>
+<td><code>'sqrt'</code></td>
+<td>Number of features randomly selected at each split</td>
+<td><code>'sqrt'</code> → square root of total features. <code>'log2'</code> → log2 of features. <code>None</code> → all features (reduces randomness, closer to single tree)</td>
+</tr>
+<tr>
+<td><code>n_jobs</code></td>
+<td><code>None</code> (1 core)</td>
+<td>Parallel processing</td>
+<td><code>-1</code> → use all CPU cores → <strong>much faster</strong>. <code>1</code> → single core (slow but safe)</td>
+</tr>
+<tr>
+<td><code>bootstrap</code></td>
+<td><code>True</code></td>
+<td>Sample with replacement</td>
+<td><code>False</code> → each tree sees all data (less diversity, more correlated trees, less effective ensemble)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Key insight:</strong> <code>n_estimators</code> almost never hurts — more trees = better (just slower). But <code>max_depth</code> too high = each tree overfits (though the forest mitigates this).</p>
+<h3 id="94-support-vector-machine-svm">9.4 Support Vector Machine (SVM)</h3>
+<pre><code class="language-python">svm = SVC(
+    kernel='rbf',           # Kernel type
+    C=1.0,                  # Regularization
+    gamma='scale',          # Kernel coefficient
+    probability=True,       # Enable probability estimates (for ROC-AUC)
+    random_state=42
+)
+svm.fit(X_train, y_train)
+svm_pred = svm.predict(X_test)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>What It Does</th>
+<th>What Happens If Changed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>kernel</code></td>
+<td><code>'rbf'</code></td>
+<td>Type of decision boundary</td>
+<td><code>'linear'</code> → straight line. <code>'rbf'</code> → curved boundary (Gaussian). <code>'poly'</code> → polynomial curves. For our data, <code>'rbf'</code> or <code>'linear'</code> work about equally</td>
+</tr>
+<tr>
+<td><code>C</code></td>
+<td><code>1.0</code></td>
+<td>Regularization (same as Logistic Regression)</td>
+<td>Higher → tighter fit, risk overfitting. Lower → looser fit, risk underfitting</td>
+</tr>
+<tr>
+<td><code>gamma</code></td>
+<td><code>'scale'</code></td>
+<td>How far the influence of a single training point reaches</td>
+<td><code>'scale'</code> → auto-calculated (safe default). <code>'auto'</code> → 1/n_features. High gamma → overfitting (each point has very local influence). Low gamma → underfitting</td>
+</tr>
+<tr>
+<td><code>probability</code></td>
+<td><code>False</code></td>
+<td>Enable probability predictions</td>
+<td>Must be <code>True</code> for <code>roc_auc_score</code> and <code>predict_proba()</code>. Setting to <code>True</code> makes training slightly slower (uses cross-validation internally)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Important:</strong> SVM is <strong>very sensitive to feature scaling</strong>. If you skip <code>StandardScaler</code>, SVM accuracy can drop by 10-15%. Always scale before SVM.</p>
+<h3 id="95-cross-validation">9.5 Cross-Validation</h3>
+<pre><code class="language-python">models = {
+    'Logistic Regression': lr,
+    'Decision Tree': dt,
+    'Random Forest': rf,
+    'SVM': svm
+}
+
+for name, model in models.items():
+    scores = cross_val_score(model, X_train, y_train, cv=5, scoring='accuracy')
+    print(f'{name}: Mean CV Accuracy = {scores.mean():.4f} (+/- {scores.std():.4f})')
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+<th>What It Does</th>
+<th>What Happens If Changed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cv</code></td>
+<td><code>5</code></td>
+<td>Number of folds</td>
+<td><code>3</code> → faster but less reliable. <code>10</code> → more reliable but slower. <code>5</code> is the sweet spot</td>
+</tr>
+<tr>
+<td><code>scoring</code></td>
+<td><code>'accuracy'</code></td>
+<td>Metric to evaluate</td>
+<td><code>'f1'</code> → evaluates F1-score. <code>'roc_auc'</code> → evaluates AUC. <code>'precision'</code> / <code>'recall'</code> → evaluates those specific metrics</td>
+</tr>
+<tr>
+<td>Use <code>X_train</code> not <code>X</code></td>
+<td>—</td>
+<td>Cross-validate only on training data</td>
+<td>Using <code>X</code> (all data) → <strong>data leakage!</strong> Test data leaks into cross-validation folds</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="10-model-evaluation">10. Model Evaluation</h2>
+<h3 id="101-accuracy">10.1 Accuracy</h3>
+<pre><code class="language-python">print(f'Accuracy: {accuracy_score(y_test, lr_pred):.4f}')
+</code></pre>
+<p><strong>What it computes:</strong> <code>(TP + TN) / (TP + TN + FP + FN)</code></p>
+<h3 id="102-classification-report">10.2 Classification Report</h3>
+<pre><code class="language-python">print(classification_report(y_test, rf_pred, target_names=['Rejected', 'Approved']))
+</code></pre>
+<p><strong>Output format:</strong></p>
+<pre><code>              precision    recall  f1-score   support
+    Rejected       0.xx      0.xx      0.xx       xx
+    Approved       0.xx      0.xx      0.xx       xx
+    accuracy                           0.xx      xxx
+   macro avg       0.xx      0.xx      0.xx      xxx
+weighted avg       0.xx      0.xx      0.xx      xxx
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>support</code></td>
+<td>Number of actual instances of each class in the test set</td>
+</tr>
+<tr>
+<td><code>macro avg</code></td>
+<td>Simple average across classes (treats both equally)</td>
+</tr>
+<tr>
+<td><code>weighted avg</code></td>
+<td>Weighted by support (accounts for class imbalance)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="103-confusion-matrix">10.3 Confusion Matrix</h3>
+<pre><code class="language-python">cm = confusion_matrix(y_test, rf_pred)
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
+            xticklabels=['Rejected', 'Approved'],
+            yticklabels=['Rejected', 'Approved'])
+plt.xlabel('Predicted')
+plt.ylabel('Actual')
+plt.title('Confusion Matrix — Random Forest')
+plt.show()
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>What It Does</th>
+<th>What Happens If Changed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fmt='d'</code></td>
+<td>Display as integers</td>
+<td><code>fmt='.2f'</code> → shows decimals (confusing for counts)</td>
+</tr>
+<tr>
+<td><code>cmap='Blues'</code></td>
+<td>Blue color palette</td>
+<td><code>'Reds'</code>, <code>'Greens'</code>, <code>'YlOrRd'</code> — aesthetic only</td>
+</tr>
+<tr>
+<td><code>xticklabels</code>/<code>yticklabels</code></td>
+<td>Axis labels</td>
+<td>Remove → shows 0/1 instead of Rejected/Approved. Less readable</td>
+</tr>
+</tbody>
+</table>
+<h3 id="104-roc-auc-curve">10.4 ROC-AUC Curve</h3>
+<pre><code class="language-python"># Get probability predictions (not class predictions)
+rf_proba = rf.predict_proba(X_test)[:, 1]  # Probability of class 1 (Approved)
+
+# Compute ROC curve
+fpr, tpr, thresholds = roc_curve(y_test, rf_proba)
+auc_score = roc_auc_score(y_test, rf_proba)
+
+# Plot
+plt.plot(fpr, tpr, label=f'Random Forest (AUC = {auc_score:.3f})')
+plt.plot([0, 1], [0, 1], 'k--', label='Random Guess (AUC = 0.5)')
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('ROC Curve')
+plt.legend()
+plt.show()
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Code Element</th>
+<th>What It Does</th>
+<th>What Happens If Changed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>predict_proba(X_test)[:, 1]</code></td>
+<td>Gets probability of being class 1 (Approved)</td>
+<td><code>[:, 0]</code> → probability of class 0 (Rejected). ROC curve flips. AUC becomes 1-AUC</td>
+</tr>
+<tr>
+<td><code>[0, 1], [0, 1], 'k--'</code></td>
+<td>Diagonal line representing random guess (50-50)</td>
+<td>Removing → no baseline comparison on the plot</td>
+</tr>
+<tr>
+<td><code>thresholds</code></td>
+<td>Classification thresholds at each point on the curve</td>
+<td>Can use these to find optimal threshold (not necessarily 0.5)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="105-feature-importance-random-forest">10.5 Feature Importance (Random Forest)</h3>
+<pre><code class="language-python">importances = rf.feature_importances_
+feature_names = X.columns
+feat_imp = pd.Series(importances, index=feature_names).sort_values(ascending=False)
+
+feat_imp.plot(kind='barh')
+plt.title('Feature Importance — Random Forest')
+plt.xlabel('Importance Score')
+plt.show()
+</code></pre>
+<p><strong>What this shows:</strong> Which features the model relied on most. <code>Credit_History</code> will dominate with ~0.25-0.35 importance.</p>
+<hr />
+<h2 id="11-model-saving-loading">11. Model Saving &amp; Loading</h2>
+<h3 id="saving">Saving</h3>
+<pre><code class="language-python">import joblib
+
+# Save the best model
+joblib.dump(rf, 'models/best_model.pkl')
+
+# Save the scaler (needed for new predictions)
+joblib.dump(scaler, 'models/scaler.pkl')
+</code></pre>
+<h3 id="loading-predicting">Loading &amp; Predicting</h3>
+<pre><code class="language-python"># Load model and scaler
+model = joblib.load('models/best_model.pkl')
+scaler = joblib.load('models/scaler.pkl')
+
+# New applicant data (must match training features, in order)
+new_data = pd.DataFrame({
+    'Gender': [1],              # Male
+    'Married': [1],             # Yes
+    'Dependents': [2],
+    'Education': [0],           # Graduate
+    'Self_Employed': [0],       # No
+    'ApplicantIncome': [5000],
+    'CoapplicantIncome': [2000],
+    'LoanAmount': [150],
+    'Loan_Amount_Term': [360],
+    'Credit_History': [1],
+    'Property_Area': [1],       # Semiurban
+    'TotalIncome': [7000],
+    'LoanAmountPerMonth': [0.42],
+    'IncomeToLoanRatio': [46.67]
+})
+
+# Scale numerical columns (use transform, NOT fit_transform)
+new_data[cols_to_scale] = scaler.transform(new_data[cols_to_scale])
+
+# Predict
+prediction = model.predict(new_data)
+probability = model.predict_proba(new_data)
+
+print(f&quot;Prediction: {'Approved' if prediction[0] == 1 else 'Rejected'}&quot;)
+print(f&quot;Confidence: {probability[0][prediction[0]]:.2%}&quot;)
+</code></pre>
+<p><strong>Critical mistake to avoid:</strong> Using <code>scaler.fit_transform()</code> on new data instead of <code>scaler.transform()</code>. <code>fit_transform</code> would recalculate mean/std from this single row, destroying the scaling. Always use <code>transform</code> for new data.</p>
+<hr />
+<h2 id="12-parameter-sensitivity-guide-what-happens-when-you-change">12. Parameter Sensitivity Guide — What Happens When You Change...</h2>
+<p>This is the most important section. It answers "what if" questions.</p>
+<h3 id="121-data-level-changes">12.1 Data-Level Changes</h3>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Effect on Accuracy</th>
+<th>Effect on Model</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Remove <code>Credit_History</code></strong></td>
+<td>Drops by ~10-15%</td>
+<td>Model loses its strongest signal. Has to rely on income/loan amount</td>
+</tr>
+<tr>
+<td><strong>Remove all engineered features</strong></td>
+<td>Drops by ~1-3%</td>
+<td>Minor impact. Raw features capture most information</td>
+</tr>
+<tr>
+<td><strong>Use mean instead of median for imputation</strong></td>
+<td>Drops by ~0-1%</td>
+<td>Outliers inflate imputed values. Minor effect</td>
+</tr>
+<tr>
+<td><strong>Skip log transformation</strong></td>
+<td>Logistic Regression drops ~2-3%, Random Forest unchanged</td>
+<td>Tree-based models don't care about distribution shape</td>
+</tr>
+<tr>
+<td><strong>Skip encoding</strong></td>
+<td>Model crashes</td>
+<td><code>ValueError: could not convert string to float</code></td>
+</tr>
+<tr>
+<td><strong>Skip scaling</strong></td>
+<td>SVM drops ~5-15%, LR drops ~2-5%, RF unchanged</td>
+<td>Distance-based models (SVM, LR) are scale-sensitive</td>
+</tr>
+<tr>
+<td><strong>Use One-Hot instead of Label for Property_Area</strong></td>
+<td>±0-1% change</td>
+<td>Adds 2 extra columns. Marginal difference</td>
+</tr>
+<tr>
+<td><strong>Change test_size to 0.3</strong></td>
+<td>±1-2% change</td>
+<td>Less training data → slightly worse model, but more reliable test evaluation</td>
+</tr>
+<tr>
+<td><strong>Remove stratify</strong></td>
+<td>Can vary ±3-5% between runs</td>
+<td>Test set may not represent class distribution</td>
+</tr>
+</tbody>
+</table>
+<h3 id="122-model-level-changes">12.2 Model-Level Changes</h3>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>What Happens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LR: C = 0.001</strong></td>
+<td>Very strong regularization. Model becomes very simple. Accuracy drops to ~75%</td>
+</tr>
+<tr>
+<td><strong>LR: C = 1000</strong></td>
+<td>Almost no regularization. Model fits training data closely. May overfit slightly</td>
+</tr>
+<tr>
+<td><strong>DT: max_depth = None</strong></td>
+<td>Tree memorizes training data. Training accuracy = 100%, test accuracy = ~65-70%</td>
+</tr>
+<tr>
+<td><strong>DT: max_depth = 2</strong></td>
+<td>Tree too shallow. Only makes 2 decisions. Underfits. Accuracy = ~75%</td>
+</tr>
+<tr>
+<td><strong>DT: max_depth = 5</strong></td>
+<td>Sweet spot. Good generalization. Accuracy = ~75-78%</td>
+</tr>
+<tr>
+<td><strong>RF: n_estimators = 10</strong></td>
+<td>Too few trees. High variance. Results change a lot between runs</td>
+</tr>
+<tr>
+<td><strong>RF: n_estimators = 500</strong></td>
+<td>Marginal improvement over 100. Much slower training</td>
+</tr>
+<tr>
+<td><strong>RF: max_features = None</strong></td>
+<td>All features at each split. Trees become correlated (similar). Less effective ensemble</td>
+</tr>
+<tr>
+<td><strong>SVM: kernel = 'linear'</strong></td>
+<td>Straight decision boundary. Simpler but often works well on this data</td>
+</tr>
+<tr>
+<td><strong>SVM: kernel = 'poly', degree=5</strong></td>
+<td>Very complex boundary. High risk of overfitting on 614 rows</td>
+</tr>
+<tr>
+<td><strong>SVM: gamma = 100</strong></td>
+<td>Each point has tiny influence radius. Model memorizes training data. Severe overfitting</td>
+</tr>
+</tbody>
+</table>
+<h3 id="123-evaluation-level-changes">12.3 Evaluation-Level Changes</h3>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>What Happens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>cv = 3 instead of 5</strong></td>
+<td>Cross-validation is faster but less reliable (each fold = 33% of data)</td>
+</tr>
+<tr>
+<td><strong>cv = 10</strong></td>
+<td>More reliable but slower. Each fold = 10% of data (only ~49 rows for validation). May be noisy</td>
+</tr>
+<tr>
+<td><strong>scoring = 'f1' instead of 'accuracy'</strong></td>
+<td>Evaluates F1-score. May rank models differently — penalizes models that ignore the minority class</td>
+</tr>
+<tr>
+<td><strong>threshold = 0.3 instead of 0.5</strong></td>
+<td>More applicants predicted as Approved. Recall ↑, Precision ↓. Bank takes more risk</td>
+</tr>
+<tr>
+<td><strong>threshold = 0.7 instead of 0.5</strong></td>
+<td>Fewer applicants approved. Precision ↑, Recall ↓. Bank is more conservative</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="13-common-errors-fixes">13. Common Errors &amp; Fixes</h2>
+<table>
+<thead>
+<tr>
+<th>Error</th>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ValueError: Input contains NaN</code></td>
+<td>Missing values not handled</td>
+<td>Run imputation code before model training</td>
+</tr>
+<tr>
+<td><code>ValueError: could not convert string to float</code></td>
+<td>Categorical columns not encoded</td>
+<td>Apply Label Encoding to all string columns</td>
+</tr>
+<tr>
+<td><code>ConvergenceWarning: lbfgs failed to converge</code></td>
+<td>Logistic Regression needs more iterations</td>
+<td>Set <code>max_iter=1000</code> or <code>max_iter=5000</code></td>
+</tr>
+<tr>
+<td><code>KeyError: 'column_name'</code></td>
+<td>Column doesn't exist in DataFrame</td>
+<td>Check <code>df.columns</code> for exact spelling</td>
+</tr>
+<tr>
+<td><code>ValueError: X has N features, but model expects M</code></td>
+<td>Mismatch between training and prediction features</td>
+<td>Ensure new data has exact same columns in same order</td>
+</tr>
+<tr>
+<td><code>NotFittedError: This StandardScaler instance is not fitted</code></td>
+<td>Using <code>scaler.transform()</code> before <code>scaler.fit()</code></td>
+<td>Call <code>scaler.fit(X_train)</code> or <code>scaler.fit_transform(X_train)</code> first</td>
+</tr>
+<tr>
+<td><code>ImportError: No module named 'sklearn'</code></td>
+<td>scikit-learn not installed</td>
+<td>Run <code>pip install scikit-learn</code></td>
+</tr>
+<tr>
+<td>Test accuracy &gt;&gt; Cross-validation accuracy</td>
+<td>Data leakage (fitted scaler on full data)</td>
+<td>Fit scaler ONLY on training data, transform test separately</td>
+</tr>
+<tr>
+<td>Training accuracy = 100%, test = 65%</td>
+<td>Overfitting (Decision Tree max_depth not set)</td>
+<td>Set <code>max_depth=5</code>, increase <code>min_samples_split</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<blockquote>
+<p><strong>REMEMBER:</strong> The best way to learn this is to actually change the parameters and observe the effect. Run the notebook, change one thing at a time, re-run, and note the difference. That's the real understanding that will save you in the viva.</p>
+</blockquote>
+        <div class="footer">
+            HDFC Bank Loan Approval Classification Project | Built for AI for Engineers
+        </div>
+    </div>
+</body>
+</html>

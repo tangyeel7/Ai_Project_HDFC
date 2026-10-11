@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Plan & Team Roles — HDFC Bank AI Project</title>
+    
+    <!-- MathJax for rendering LaTeX formulas -->
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            line-height: 1.65;
+            color: #24292f;
+            background-color: #f6f8fa;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #0d47a1;
+            color: white;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar h2 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+        .nav-links a {
+            color: #e3f2fd;
+            text-decoration: none;
+            margin-left: 16px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .nav-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 980px;
+            margin: 30px auto;
+            background: #ffffff;
+            padding: 45px 55px;
+            border-radius: 8px;
+            border: 1px solid #d0d7de;
+            box-shadow: 0 3px 12px rgba(140, 149, 159, 0.15);
+        }
+        h1, h2, h3, h4 {
+            color: #1a202c;
+            font-weight: 600;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            line-height: 1.25;
+        }
+        h1 {
+            font-size: 2rem;
+            border-bottom: 2px solid #eaecef;
+            padding-bottom: 10px;
+            color: #0d47a1;
+        }
+        h2 {
+            font-size: 1.5rem;
+            border-bottom: 1px solid #eaecef;
+            padding-bottom: 8px;
+            margin-top: 32px;
+        }
+        h3 {
+            font-size: 1.25rem;
+        }
+        p, ul, ol {
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-size: 1rem;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            display: table;
+            font-size: 0.92rem;
+        }
+        th, td {
+            border: 1px solid #d0d7de;
+            padding: 10px 14px;
+            text-align: left;
+        }
+        th {
+            background-color: #f3f4f6;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        code {
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+            background-color: rgba(175, 184, 193, 0.2);
+            padding: 0.2em 0.4em;
+            border-radius: 6px;
+            font-size: 85%;
+            color: #b91c1c;
+        }
+        pre {
+            background-color: #1e293b;
+            color: #f8fafc;
+            padding: 16px;
+            border-radius: 8px;
+            overflow: auto;
+            font-size: 88%;
+            line-height: 1.45;
+        }
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+        }
+        blockquote {
+            margin: 16px 0;
+            padding: 12px 18px;
+            border-left: 4px solid #2563eb;
+            background-color: #eff6ff;
+            color: #1e3a8a;
+            border-radius: 0 6px 6px 0;
+        }
+        blockquote p {
+            margin: 0;
+        }
+        /* MathJax equation display formatting */
+        .MathJax {
+            font-size: 1.15em !important;
+            color: #0f172a;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+        @media print {
+            .navbar { display: none; }
+            .container { border: none; box-shadow: none; margin: 0; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h2>🏦 HDFC Bank Loan Prediction — AI Project Manual</h2>
+        <div class="nav-links">
+            <a href="INDEX.html">📑 All Documents</a>
+            <a href="PROJECT_PLAN.html">Project Plan</a>
+            <a href="LEADERS_VIVA_GUIDE.html">Viva Guide</a>
+            <a href="PARAMETERS_CHEAT_SHEET.html">Cheat Sheet</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1 id="hdfc-bank-loan-approval-prediction-project-plan">HDFC Bank Loan Approval Prediction — Project Plan</h1>
+<h2 id="1-project-overview">1. Project Overview</h2>
+<p><strong>Title:</strong> Loan Approval Prediction System for HDFC Bank Ltd.
+<strong>Subject:</strong> AI for Engineers
+<strong>Type:</strong> Supervised Machine Learning — Binary Classification
+<strong>Objective:</strong> Build a classification model that predicts whether a loan application should be <strong>Approved</strong> or <strong>Rejected</strong> based on applicant details such as income, credit history, employment status, and property area.</p>
+<hr />
+<h2 id="2-team-structure-responsibilities">2. Team Structure &amp; Responsibilities</h2>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Team Leader (Aditya)</strong></td>
+<td>Overall coordination, code architecture, model selection &amp; tuning, final integration, viva preparation, documentation</td>
+</tr>
+<tr>
+<td><strong>Member 2 — Data Handler</strong></td>
+<td>Dataset collection (Kaggle), data cleaning, missing value treatment, exploratory data analysis (EDA)</td>
+</tr>
+<tr>
+<td><strong>Member 3 — Feature Engineer</strong></td>
+<td>Feature engineering, encoding categorical variables, feature scaling, train-test split</td>
+</tr>
+<tr>
+<td><strong>Member 4 — Model Builder</strong></td>
+<td>Training multiple models, hyperparameter tuning, cross-validation</td>
+</tr>
+<tr>
+<td><strong>Member 5 — Evaluator &amp; Presenter</strong></td>
+<td>Model evaluation metrics, confusion matrix, comparison charts, PPT/report preparation</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>NOTE:</strong> The leader should review every member's work before integration. All code must be in <strong>Python</strong> using <strong>Jupyter Notebooks</strong> or <code>.py</code> files.</p>
+</blockquote>
+<hr />
+<h2 id="3-dataset-details">3. Dataset Details</h2>
+<p><strong>Source:</strong> Kaggle — "Loan Prediction Dataset" (Analytics Vidhya / Dream Housing Finance)
+<strong>File:</strong> <code>loan_data.csv</code>
+<strong>Records:</strong> ~614 rows
+<strong>Target Variable:</strong> <code>Loan_Status</code> (Y = Approved, N = Rejected)</p>
+<h3 id="31-feature-dictionary">3.1 Feature Dictionary</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Column</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>Loan_ID</code></td>
+<td>String</td>
+<td>Unique loan reference ID (drop before training)</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>Gender</code></td>
+<td>Categorical</td>
+<td>Male / Female</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>Married</code></td>
+<td>Categorical</td>
+<td>Yes / No</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>Dependents</code></td>
+<td>Categorical</td>
+<td>0, 1, 2, 3+</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>Education</code></td>
+<td>Categorical</td>
+<td>Graduate / Not Graduate</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>Self_Employed</code></td>
+<td>Categorical</td>
+<td>Yes / No</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>ApplicantIncome</code></td>
+<td>Numerical</td>
+<td>Income of applicant</td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>CoapplicantIncome</code></td>
+<td>Numerical</td>
+<td>Income of co-applicant</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>LoanAmount</code></td>
+<td>Numerical</td>
+<td>Loan amount (in thousands)</td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>Loan_Amount_Term</code></td>
+<td>Numerical</td>
+<td>Term of loan (in months)</td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>Credit_History</code></td>
+<td>Numerical</td>
+<td>Credit history meets guidelines (1 = Yes, 0 = No)</td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>Property_Area</code></td>
+<td>Categorical</td>
+<td>Urban / Semiurban / Rural</td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>Loan_Status</code></td>
+<td>Categorical</td>
+<td><strong>Y</strong> (Approved) / <strong>N</strong> (Rejected) — TARGET</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-technology-stack">4. Technology Stack</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Tool/Library</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Language</td>
+<td>Python 3.10+</td>
+</tr>
+<tr>
+<td>IDE</td>
+<td>Jupyter Notebook / VS Code</td>
+</tr>
+<tr>
+<td>Data Handling</td>
+<td><code>pandas</code>, <code>numpy</code></td>
+</tr>
+<tr>
+<td>Visualization</td>
+<td><code>matplotlib</code>, <code>seaborn</code></td>
+</tr>
+<tr>
+<td>Preprocessing</td>
+<td><code>scikit-learn</code> (LabelEncoder, StandardScaler, train_test_split)</td>
+</tr>
+<tr>
+<td>Modeling</td>
+<td><code>scikit-learn</code> (LogisticRegression, DecisionTreeClassifier, RandomForestClassifier, SVC)</td>
+</tr>
+<tr>
+<td>Evaluation</td>
+<td><code>scikit-learn</code> (accuracy_score, confusion_matrix, classification_report, cross_val_score)</td>
+</tr>
+<tr>
+<td>Optional</td>
+<td><code>xgboost</code>, <code>streamlit</code> (for demo UI)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-project-workflow-step-by-step">5. Project Workflow (Step-by-Step)</h2>
+<h3 id="phase-1-data-collection-understanding-day-1-2">Phase 1 — Data Collection &amp; Understanding (Day 1-2)</h3>
+<ul>
+<li>Download dataset from Kaggle</li>
+<li>Load into pandas DataFrame</li>
+<li>Understand shape, dtypes, head/tail</li>
+<li>Check for missing values (<code>df.isnull().sum()</code>)</li>
+<li>Check class distribution of <code>Loan_Status</code></li>
+</ul>
+<h3 id="phase-2-exploratory-data-analysis-day-2-3">Phase 2 — Exploratory Data Analysis (Day 2-3)</h3>
+<ul>
+<li>Univariate analysis: histograms for numerical, countplots for categorical</li>
+<li>Bivariate analysis: how each feature relates to <code>Loan_Status</code></li>
+<li>Correlation heatmap for numerical features</li>
+<li>Box plots for outlier detection (<code>ApplicantIncome</code>, <code>LoanAmount</code>)</li>
+<li>Key insight documentation</li>
+</ul>
+<h3 id="phase-3-data-preprocessing-day-3-4">Phase 3 — Data Preprocessing (Day 3-4)</h3>
+<ul>
+<li>Handle missing values:</li>
+<li>Categorical → fill with <strong>mode</strong></li>
+<li>Numerical → fill with <strong>median</strong></li>
+<li>Handle outliers using log transformation on <code>ApplicantIncome</code>, <code>LoanAmount</code></li>
+<li>Encode categorical variables:</li>
+<li>Label Encoding for binary columns (<code>Gender</code>, <code>Married</code>, <code>Education</code>, <code>Self_Employed</code>, <code>Loan_Status</code>)</li>
+<li>One-Hot Encoding / Label Encoding for <code>Dependents</code>, <code>Property_Area</code></li>
+<li>Feature engineering:</li>
+<li><code>TotalIncome = ApplicantIncome + CoapplicantIncome</code></li>
+<li><code>LoanAmountPerMonth = LoanAmount / Loan_Amount_Term</code></li>
+<li><code>IncomeToLoanRatio = TotalIncome / LoanAmount</code></li>
+<li>Drop <code>Loan_ID</code> column</li>
+<li>Feature scaling using <code>StandardScaler</code> (for models that need it like SVM, Logistic Regression)</li>
+<li>Train-test split: <strong>80% train, 20% test</strong> (<code>random_state=42</code>)</li>
+</ul>
+<h3 id="phase-4-model-building-day-4-5">Phase 4 — Model Building (Day 4-5)</h3>
+<ul>
+<li>Train the following models:</li>
+<li><strong>Logistic Regression</strong> (baseline)</li>
+<li><strong>Decision Tree Classifier</strong></li>
+<li><strong>Random Forest Classifier</strong></li>
+<li><strong>Support Vector Machine (SVM)</strong></li>
+<li><em>(Optional)</em> <strong>XGBoost / Gradient Boosting</strong></li>
+<li>Use <strong>5-fold cross-validation</strong> for each model</li>
+<li>Record training accuracy and cross-validation accuracy</li>
+</ul>
+<h3 id="phase-5-model-evaluation-comparison-day-5-6">Phase 5 — Model Evaluation &amp; Comparison (Day 5-6)</h3>
+<ul>
+<li>Evaluate on test set using:</li>
+<li>Accuracy Score</li>
+<li>Precision, Recall, F1-Score</li>
+<li>Confusion Matrix</li>
+<li>ROC-AUC Curve</li>
+<li>Create comparison table of all models</li>
+<li>Select best model based on accuracy + F1-score balance</li>
+<li>Plot confusion matrices side-by-side</li>
+</ul>
+<h3 id="phase-6-final-integration-documentation-day-6-7">Phase 6 — Final Integration &amp; Documentation (Day 6-7)</h3>
+<ul>
+<li>Clean up final notebook with markdown explanations</li>
+<li>Save best model using <code>joblib</code> or <code>pickle</code></li>
+<li><em>(Optional)</em> Build a Streamlit web app for live prediction</li>
+<li>Prepare project report / PPT</li>
+<li>Prepare for viva questions</li>
+</ul>
+<hr />
+<h2 id="6-deliverables-checklist">6. Deliverables Checklist</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Deliverable</th>
+<th>Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Final Jupyter Notebook</td>
+<td><code>.ipynb</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Dataset</td>
+<td><code>.csv</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Saved Model</td>
+<td><code>.pkl</code> or <code>.joblib</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Project Report</td>
+<td><code>.pdf</code> / <code>.docx</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Presentation</td>
+<td><code>.pptx</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>This Plan Document</td>
+<td><code>.md</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td>Leader's Viva Guide</td>
+<td><code>.md</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>Code Explanation Guide</td>
+<td><code>.md</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td><em>(Optional)</em> Streamlit App</td>
+<td><code>.py</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7-folder-structure">7. Folder Structure</h2>
+<pre><code>Ai_Project/
+├── data/
+│   └── loan_data.csv
+├── notebooks/
+│   ├── 01_eda.ipynb
+│   ├── 02_preprocessing.ipynb
+│   └── 03_modeling.ipynb
+├── models/
+│   └── best_model.pkl
+├── app/
+│   └── streamlit_app.py          # (Optional)
+├── docs/
+│   ├── PROJECT_PLAN.md
+│   ├── LEADERS_VIVA_GUIDE.md
+│   └── CODE_EXPLANATION.md
+├── report/
+│   └── project_report.pdf
+└── requirements.txt
+</code></pre>
+<hr />
+<h2 id="8-timeline-summary">8. Timeline Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Day</th>
+<th>Activity</th>
+<th>Owner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Day 1</td>
+<td>Dataset download, initial exploration</td>
+<td>Member 2</td>
+</tr>
+<tr>
+<td>Day 2</td>
+<td>EDA — plots, insights</td>
+<td>Member 2 + Leader</td>
+</tr>
+<tr>
+<td>Day 3</td>
+<td>Data cleaning, missing values, encoding</td>
+<td>Member 3</td>
+</tr>
+<tr>
+<td>Day 4</td>
+<td>Feature engineering, scaling, splitting</td>
+<td>Member 3 + Leader</td>
+</tr>
+<tr>
+<td>Day 5</td>
+<td>Model training, cross-validation</td>
+<td>Member 4</td>
+</tr>
+<tr>
+<td>Day 6</td>
+<td>Evaluation, comparison, best model selection</td>
+<td>Member 4 + Member 5</td>
+</tr>
+<tr>
+<td>Day 7</td>
+<td>Final notebook, report, PPT, viva prep</td>
+<td>All + Leader</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="9-risk-mitigation">9. Risk &amp; Mitigation</h2>
+<table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Small dataset (614 rows) — risk of overfitting</td>
+<td>Use cross-validation, avoid overly complex models</td>
+</tr>
+<tr>
+<td>Missing values in critical columns</td>
+<td>Use median/mode imputation; document justification</td>
+</tr>
+<tr>
+<td>Class imbalance (more Approved than Rejected)</td>
+<td>Monitor with precision/recall; consider SMOTE if needed</td>
+</tr>
+<tr>
+<td>Team member delays</td>
+<td>Leader reviews daily; fallback = leader completes pending tasks</td>
+</tr>
+<tr>
+<td>Viva — team member can't answer</td>
+<td>Leader's Viva Guide shared with all members 2 days before viva</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<blockquote>
+<p><strong>IMPORTANT — For the leader:</strong> Read <code>LEADERS_VIVA_GUIDE.md</code> thoroughly. It contains answers to every possible viva question. Read <code>CODE_EXPLANATION.md</code> to understand every line and parameter so you can explain and debug on the spot.</p>
+</blockquote>
+        <div class="footer">
+            HDFC Bank Loan Approval Classification Project | Built for AI for Engineers
+        </div>
+    </div>
+</body>
+</html>

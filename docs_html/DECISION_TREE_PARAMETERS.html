@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decision Tree Parameters Guide — HDFC Bank AI Project</title>
+    
+    <!-- MathJax for rendering LaTeX formulas -->
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            line-height: 1.65;
+            color: #24292f;
+            background-color: #f6f8fa;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #0d47a1;
+            color: white;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar h2 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+        .nav-links a {
+            color: #e3f2fd;
+            text-decoration: none;
+            margin-left: 16px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .nav-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 980px;
+            margin: 30px auto;
+            background: #ffffff;
+            padding: 45px 55px;
+            border-radius: 8px;
+            border: 1px solid #d0d7de;
+            box-shadow: 0 3px 12px rgba(140, 149, 159, 0.15);
+        }
+        h1, h2, h3, h4 {
+            color: #1a202c;
+            font-weight: 600;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            line-height: 1.25;
+        }
+        h1 {
+            font-size: 2rem;
+            border-bottom: 2px solid #eaecef;
+            padding-bottom: 10px;
+            color: #0d47a1;
+        }
+        h2 {
+            font-size: 1.5rem;
+            border-bottom: 1px solid #eaecef;
+            padding-bottom: 8px;
+            margin-top: 32px;
+        }
+        h3 {
+            font-size: 1.25rem;
+        }
+        p, ul, ol {
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-size: 1rem;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            display: table;
+            font-size: 0.92rem;
+        }
+        th, td {
+            border: 1px solid #d0d7de;
+            padding: 10px 14px;
+            text-align: left;
+        }
+        th {
+            background-color: #f3f4f6;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        code {
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+            background-color: rgba(175, 184, 193, 0.2);
+            padding: 0.2em 0.4em;
+            border-radius: 6px;
+            font-size: 85%;
+            color: #b91c1c;
+        }
+        pre {
+            background-color: #1e293b;
+            color: #f8fafc;
+            padding: 16px;
+            border-radius: 8px;
+            overflow: auto;
+            font-size: 88%;
+            line-height: 1.45;
+        }
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+        }
+        blockquote {
+            margin: 16px 0;
+            padding: 12px 18px;
+            border-left: 4px solid #2563eb;
+            background-color: #eff6ff;
+            color: #1e3a8a;
+            border-radius: 0 6px 6px 0;
+        }
+        blockquote p {
+            margin: 0;
+        }
+        /* MathJax equation display formatting */
+        .MathJax {
+            font-size: 1.15em !important;
+            color: #0f172a;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+        @media print {
+            .navbar { display: none; }
+            .container { border: none; box-shadow: none; margin: 0; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h2>🏦 HDFC Bank Loan Prediction — AI Project Manual</h2>
+        <div class="nav-links">
+            <a href="INDEX.html">📑 All Documents</a>
+            <a href="PROJECT_PLAN.html">Project Plan</a>
+            <a href="LEADERS_VIVA_GUIDE.html">Viva Guide</a>
+            <a href="PARAMETERS_CHEAT_SHEET.html">Cheat Sheet</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1 id="decision-tree-complete-parameter-architecture-guide">Decision Tree — Complete Parameter &amp; Architecture Guide</h1>
+<blockquote>
+<p><strong>Project:</strong> HDFC Bank Loan Approval Prediction<br />
+<strong>Target:</strong> Binary Classification (<code>0 = Rejected</code>, <code>1 = Approved</code>)<br />
+<strong>Model:</strong> <code>sklearn.tree.DecisionTreeClassifier</code><br />
+<strong>Role:</strong> Group Leader's Technical Deep-Dive &amp; Parameter Manual</p>
+</blockquote>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#1-core-mathematical-intuition">Core Mathematical Intuition</a></li>
+<li><a href="#2-complete-parameter-dictionary">Complete Parameter Dictionary</a></li>
+<li><a href="#3-parameter-sensitivity-analysis">Parameter Sensitivity Analysis (What Happens When You Change...)</a></li>
+<li><a href="#4-our-chosen-configuration-for-hdfc-loan-data">Our Chosen Configuration for HDFC Loan Data</a></li>
+<li><a href="#5-pruning-strategies-pre-pruning-vs-post-pruning">Pruning Strategies: Pre-Pruning vs. Post-Pruning</a></li>
+<li><a href="#6-decision-tree-overfitting-demonstration">Decision Tree Overfitting Demonstration</a></li>
+<li><a href="#7-top-viva-questions--model-answers-on-parameters">Top Viva Questions &amp; Model Answers on Parameters</a></li>
+</ol>
+<hr />
+<h2 id="1-core-mathematical-intuition">1. Core Mathematical Intuition</h2>
+<p>A Decision Tree is a non-parametric supervised learning algorithm that creates an interpretable hierarchy of if-else threshold rules by recursively partitioning the feature space.</p>
+<h3 id="splitting-criteria">Splitting Criteria:</h3>
+<h4 id="1-gini-impurity-default">1. Gini Impurity (Default):</h4>
+<p>Measures the probability of incorrectly classifying a randomly chosen element if it were randomly labeled according to the distribution of labels in the subset.
+$$\text{Gini}(D) = 1 - \sum_{k=1}^{K} p_k^2$$
+* For binary classification: $\text{Gini} = 1 - (p_{\text{Approved}}^2 + p_{\text{Rejected}}^2)$
+* <strong>Purity range:</strong>
+  * $\text{Gini} = 0.0$: Perfectly pure node (100% Approved or 100% Rejected).
+  * $\text{Gini} = 0.5$: Maximum impurity (50% Approved / 50% Rejected).</p>
+<h4 id="2-entropy-information-gain">2. Entropy &amp; Information Gain:</h4>
+<p>Measures the disorder or uncertainty in the node:
+$$\text{Entropy}(D) = -\sum_{k=1}^{K} p_k \log_2(p_k)$$
+* The reduction in entropy after a split on feature $A$ is the <strong>Information Gain</strong>:
+$$\text{Gain}(D, A) = \text{Entropy}(D) - \sum_{v \in \text{Values}(A)} \frac{|D_v|}{|D|} \text{Entropy}(D_v)$$
+* The algorithm searches through all features and all possible split values and selects the split that maximizes Information Gain (or minimizes weighted Gini impurity).</p>
+<hr />
+<h2 id="2-complete-parameter-dictionary">2. Complete Parameter Dictionary</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Type &amp; Default</th>
+<th style="text-align: left;">What It Controls</th>
+<th style="text-align: left;">Valid Options</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>criterion</code></td>
+<td style="text-align: left;"><code>{'gini', 'entropy', 'log_loss'}, default='gini'</code></td>
+<td style="text-align: left;">The function to measure split quality.</td>
+<td style="text-align: left;"><code>'gini'</code>, <code>'entropy'</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>max_depth</code></td>
+<td style="text-align: left;"><code>int, default=None</code></td>
+<td style="text-align: left;"><strong>Maximum depth of the tree</strong>. Limits how many consecutive decisions can be chained.</td>
+<td style="text-align: left;">Positive integer: <code>2</code>, <code>3</code>, <code>4</code>, <code>5</code>, <code>10</code>, or <code>None</code> (unlimited)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>min_samples_split</code></td>
+<td style="text-align: left;"><code>int or float, default=2</code></td>
+<td style="text-align: left;"><strong>Minimum number of samples required to split an internal node</strong>.</td>
+<td style="text-align: left;">Integer $\ge 2$ (e.g., <code>5</code>, <code>10</code>, <code>20</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>min_samples_leaf</code></td>
+<td style="text-align: left;"><code>int or float, default=1</code></td>
+<td style="text-align: left;"><strong>Minimum number of samples required to be at a leaf node</strong>.</td>
+<td style="text-align: left;">Integer $\ge 1$ (e.g., <code>2</code>, <code>5</code>, <code>10</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>max_features</code></td>
+<td style="text-align: left;"><code>int, float or {'sqrt', 'log2'}, default=None</code></td>
+<td style="text-align: left;">Number of features to consider when looking for the best split.</td>
+<td style="text-align: left;"><code>None</code> (all features), <code>'sqrt'</code>, <code>'log2'</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>max_leaf_nodes</code></td>
+<td style="text-align: left;"><code>int, default=None</code></td>
+<td style="text-align: left;">Maximum number of terminal leaf nodes allowed.</td>
+<td style="text-align: left;">Integer $&gt; 1$ or <code>None</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>min_impurity_decrease</code></td>
+<td style="text-align: left;"><code>float, default=0.0</code></td>
+<td style="text-align: left;">A node will be split only if this split induces a decrease of impurity $\ge$ this value.</td>
+<td style="text-align: left;">Float $\ge 0.0$ (e.g., <code>0.01</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>class_weight</code></td>
+<td style="text-align: left;"><code>dict or 'balanced', default=None</code></td>
+<td style="text-align: left;">Weights associated with target classes.</td>
+<td style="text-align: left;"><code>None</code>, <code>'balanced'</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ccp_alpha</code></td>
+<td style="text-align: left;"><code>non-negative float, default=0.0</code></td>
+<td style="text-align: left;"><strong>Cost-Complexity Pruning parameter</strong>. Minimal cost-complexity pruning strength.</td>
+<td style="text-align: left;">Float $\ge 0.0$ (e.g., <code>0.015</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>random_state</code></td>
+<td style="text-align: left;"><code>int, default=None</code></td>
+<td style="text-align: left;">Controls the randomness of the estimator when searching for splits.</td>
+<td style="text-align: left;">Any integer (we use <code>42</code>)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-parameter-sensitivity-analysis">3. Parameter Sensitivity Analysis</h2>
+<h3 id="31-what-happens-when-max_depth-changes">3.1 What happens when <code>max_depth</code> changes?</h3>
+<p>This is the single most critical parameter in a Decision Tree.</p>
+<ul>
+<li><strong><code>max_depth=None</code> (Unconstrained):</strong></li>
+<li><strong>What happens:</strong> The tree expands until every single leaf is completely pure ($\text{Gini}=0$) or contains fewer than <code>min_samples_split</code>.</li>
+<li><strong>Impact:</strong> <strong>Catastrophic Overfitting</strong>. The tree memorizes individual training applicants.</li>
+<li><strong>Empirical metrics:</strong> Training Accuracy = <strong>100%</strong>, but Test Accuracy plunges to <strong>~68-72%</strong>.</li>
+<li><strong><code>max_depth=2</code> (Too shallow — Decision Stump):</strong></li>
+<li><strong>What happens:</strong> Only 2 consecutive decisions (e.g. 1st: <code>Credit_History &lt;= 0.5</code>, 2nd: <code>TotalIncome &lt;= 3500</code>).</li>
+<li><strong>Impact:</strong> <strong>Underfitting</strong>. The model misses non-linear financial trade-offs.</li>
+<li><strong>Empirical metrics:</strong> Accuracy = ~76-78%.</li>
+<li><strong><code>max_depth=4</code> (Our Tuned Setting):</strong></li>
+<li><strong>What happens:</strong> Allows the tree to consider <code>Credit_History</code> at the root, then evaluate <code>TotalIncome</code>, <code>IncomeToLoanRatio</code>, and <code>LoanAmountPerMonth</code> in subsequent branches.</li>
+<li><strong>Impact:</strong> <strong>Optimal Generalization</strong>. Test Accuracy = <strong>82.11%</strong>, ROC-AUC = <strong>0.8485</strong>.</li>
+</ul>
+<hr />
+<h3 id="32-what-happens-when-min_samples_split-changes">3.2 What happens when <code>min_samples_split</code> changes?</h3>
+<ul>
+<li><strong><code>min_samples_split=2</code> (Default):</strong></li>
+<li>The tree is allowed to create a new branch even if only 2 applicants are left in a node!</li>
+<li><strong>Risk:</strong> Splits on statistical noise and outliers.</li>
+<li><strong><code>min_samples_split=10</code> (Our Setting):</strong></li>
+<li>A node must have at least 10 applicants before the algorithm is allowed to divide it further.</li>
+<li><strong>Benefit:</strong> Ensures that every split represents a genuine subgroup of applicants, acting as an effective regularizer.</li>
+</ul>
+<hr />
+<h3 id="33-what-happens-when-min_samples_leaf-changes">3.3 What happens when <code>min_samples_leaf</code> changes?</h3>
+<ul>
+<li><strong><code>min_samples_leaf=1</code> (Default):</strong></li>
+<li>Allows leaves with a solitary applicant. One single anomaly can create its own branch.</li>
+<li><strong><code>min_samples_leaf=5</code> (Our Setting):</strong></li>
+<li>Guarantees every final decision ("Approved" or "Rejected") is supported by at least 5 similar historical applicants.</li>
+<li>Smoothes the decision boundary and prevents fragile predictions.</li>
+</ul>
+<hr />
+<h3 id="34-what-happens-when-you-compare-criteriongini-vs-criterionentropy">3.4 What happens when you compare <code>criterion='gini'</code> vs <code>criterion='entropy'</code>?</h3>
+<ul>
+<li><strong><code>'gini'</code>:</strong> Faster computationally because it involves only squaring probabilities ($1 - \sum p^2$), without computing logarithmic functions.</li>
+<li><strong><code>'entropy'</code>:</strong> Uses $\log_2$, which is computationally slightly heavier. It penalizes mixed classes slightly more aggressively.</li>
+<li><strong>In practice:</strong> Both yield nearly identical splits (difference in accuracy is usually $&lt; 0.5\%$). We chose <code>'gini'</code> for speed and simplicity.</li>
+</ul>
+<hr />
+<h2 id="4-our-chosen-configuration-for-hdfc-loan-data">4. Our Chosen Configuration for HDFC Loan Data</h2>
+<pre><code class="language-python">model = DecisionTreeClassifier(
+    criterion='gini',         # Fast, standard impurity measure
+    max_depth=4,              # Pre-prunes tree to prevent memorization
+    min_samples_split=10,     # Requires at least 10 applicants to split
+    min_samples_leaf=5,       # Requires at least 5 applicants per final leaf
+    random_state=42           # Deterministic reproducibility
+)
+</code></pre>
+<h3 id="performance-on-hdfc-dataset">Performance on HDFC Dataset:</h3>
+<ul>
+<li><strong>5-Fold Cross-Validation Accuracy:</strong> <code>79.42% (+/- 4.83%)</code></li>
+<li><strong>Test Set Accuracy:</strong> <code>82.11%</code></li>
+<li><strong>Precision:</strong> <code>0.8182</code></li>
+<li><strong>Recall:</strong> <code>0.9529</code></li>
+<li><strong>F1-Score:</strong> <code>0.8804</code></li>
+<li><strong>ROC-AUC:</strong> <code>0.8485</code></li>
+<li><strong>Visual Export:</strong> Generated full graphical decision diagram saved to <code>reports/decision_tree_structure.png</code>.</li>
+</ul>
+<hr />
+<h2 id="5-pruning-strategies-pre-pruning-vs-post-pruning">5. Pruning Strategies: Pre-Pruning vs. Post-Pruning</h2>
+<p>Pruning is the process of trimming away branches that provide little predictive power to prevent overfitting.</p>
+<h3 id="method-a-pre-pruning-early-stopping-what-we-used">Method A: Pre-Pruning (Early Stopping — What We Used)</h3>
+<p>We halt the tree's growth before it becomes overly complex by configuring:
+1. <code>max_depth = 4</code>
+2. <code>min_samples_split = 10</code>
+3. <code>min_samples_leaf = 5</code></p>
+<h3 id="method-b-post-pruning-cost-complexity-pruning-via-ccp_alpha">Method B: Post-Pruning (Cost-Complexity Pruning via <code>ccp_alpha</code>)</h3>
+<ol>
+<li>Allow the tree to grow to full depth (<code>max_depth=None</code>).</li>
+<li>Calculate the cost-complexity measure for each sub-tree:
+   $$R_\alpha(T) = R(T) + \alpha |T|$$
+   Where $R(T)$ is total training error and $|T|$ is the number of terminal leaves.</li>
+<li>As $\alpha$ increases, smaller sub-trees are favored, pruning away weak leaves.</li>
+</ol>
+<hr />
+<h2 id="6-decision-tree-overfitting-demonstration">6. Decision Tree Overfitting Demonstration</h2>
+<p>To prove your understanding to the viva examiners, mention this exact experiment:</p>
+<pre><code class="language-python"># Unpruned Tree (Overfitting)
+dt_overfit = DecisionTreeClassifier(max_depth=None, random_state=42)
+dt_overfit.fit(X_train, y_train)
+print(&quot;Train Score:&quot;, dt_overfit.score(X_train, y_train))  # -&gt; 100.0%
+print(&quot;Test Score:&quot;, dt_overfit.score(X_test, y_test))    # -&gt; ~69.1% (31% gap!)
+
+# Pre-pruned Tree (Our Model)
+dt_pruned = DecisionTreeClassifier(max_depth=4, min_samples_split=10, random_state=42)
+dt_pruned.fit(X_train, y_train)
+print(&quot;Train Score:&quot;, dt_pruned.score(X_train, y_train))   # -&gt; 82.5%
+print(&quot;Test Score:&quot;, dt_pruned.score(X_test, y_test))     # -&gt; 82.1% (No gap!)
+</code></pre>
+<hr />
+<h2 id="7-top-viva-questions-model-answers-on-parameters">7. Top Viva Questions &amp; Model Answers on Parameters</h2>
+<h3 id="q1-why-did-you-restrict-max_depth-to-4-instead-of-leaving-it-default">Q1: Why did you restrict <code>max_depth</code> to 4 instead of leaving it default?</h3>
+<p><strong>Model Answer:</strong>  </p>
+<blockquote>
+<p><em>"The default <code>max_depth=None</code> allows the tree to branch until every leaf is pure. On a 614-row dataset with noisy income features, this causes severe overfitting—achieving 100% training accuracy but dropping to under 70% on test data. Setting <code>max_depth=4</code> restricts the tree to the top 4 layers of decision rules, forcing it to generalize based on primary indicators like <code>Credit_History</code> and <code>TotalIncome</code>."</em></p>
+</blockquote>
+<h3 id="q2-what-is-the-mathematical-difference-between-gini-impurity-and-entropy">Q2: What is the mathematical difference between Gini Impurity and Entropy?</h3>
+<p><strong>Model Answer:</strong>  </p>
+<blockquote>
+<p><em>"Gini impurity is calculated as $1 - \sum p_i^2$, while Entropy is $-\sum p_i \log_2(p_i)$. Gini measures the probability of misclassification, while Entropy measures information disorder. Computationally, Gini is faster because it does not require calculating logarithms. In practice, both yield very similar splits."</em></p>
+</blockquote>
+<h3 id="q3-what-is-the-purpose-of-min_samples_leaf">Q3: What is the purpose of <code>min_samples_leaf</code>?</h3>
+<p><strong>Model Answer:</strong>  </p>
+<blockquote>
+<p><em>"<code>min_samples_leaf</code> specifies the minimum number of observations required in any terminal node. If set to 1, a single noisy outlier could create its own leaf and dictate an approval rule. By setting <code>min_samples_leaf=5</code>, we ensure that any loan approval or rejection rule is backed by at least 5 historical applicants."</em></p>
+</blockquote>
+<h3 id="q4-does-a-decision-tree-require-feature-scaling-standardscaler">Q4: Does a Decision Tree require feature scaling (<code>StandardScaler</code>)?</h3>
+<p><strong>Model Answer:</strong>  </p>
+<blockquote>
+<p><em>"No, Decision Trees are invariant to monotonic feature scaling. A decision tree splits on threshold queries like <code>Income &lt;= 5000</code>. If you scale income using StandardScaler to <code>z &lt;= -0.27</code>, the exact same split occurs at the exact same rank order. We scaled features primarily because our pipeline also feeds models that strictly require it, such as SVM and Logistic Regression."</em></p>
+</blockquote>
+        <div class="footer">
+            HDFC Bank Loan Approval Classification Project | Built for AI for Engineers
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Parameters Cheat Sheet — HDFC Bank AI Project</title>
+    
+    <!-- MathJax for rendering LaTeX formulas -->
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            line-height: 1.65;
+            color: #24292f;
+            background-color: #f6f8fa;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #0d47a1;
+            color: white;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar h2 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+        .nav-links a {
+            color: #e3f2fd;
+            text-decoration: none;
+            margin-left: 16px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .nav-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 980px;
+            margin: 30px auto;
+            background: #ffffff;
+            padding: 45px 55px;
+            border-radius: 8px;
+            border: 1px solid #d0d7de;
+            box-shadow: 0 3px 12px rgba(140, 149, 159, 0.15);
+        }
+        h1, h2, h3, h4 {
+            color: #1a202c;
+            font-weight: 600;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            line-height: 1.25;
+        }
+        h1 {
+            font-size: 2rem;
+            border-bottom: 2px solid #eaecef;
+            padding-bottom: 10px;
+            color: #0d47a1;
+        }
+        h2 {
+            font-size: 1.5rem;
+            border-bottom: 1px solid #eaecef;
+            padding-bottom: 8px;
+            margin-top: 32px;
+        }
+        h3 {
+            font-size: 1.25rem;
+        }
+        p, ul, ol {
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-size: 1rem;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            display: table;
+            font-size: 0.92rem;
+        }
+        th, td {
+            border: 1px solid #d0d7de;
+            padding: 10px 14px;
+            text-align: left;
+        }
+        th {
+            background-color: #f3f4f6;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        code {
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+            background-color: rgba(175, 184, 193, 0.2);
+            padding: 0.2em 0.4em;
+            border-radius: 6px;
+            font-size: 85%;
+            color: #b91c1c;
+        }
+        pre {
+            background-color: #1e293b;
+            color: #f8fafc;
+            padding: 16px;
+            border-radius: 8px;
+            overflow: auto;
+            font-size: 88%;
+            line-height: 1.45;
+        }
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+        }
+        blockquote {
+            margin: 16px 0;
+            padding: 12px 18px;
+            border-left: 4px solid #2563eb;
+            background-color: #eff6ff;
+            color: #1e3a8a;
+            border-radius: 0 6px 6px 0;
+        }
+        blockquote p {
+            margin: 0;
+        }
+        /* MathJax equation display formatting */
+        .MathJax {
+            font-size: 1.15em !important;
+            color: #0f172a;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+        @media print {
+            .navbar { display: none; }
+            .container { border: none; box-shadow: none; margin: 0; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h2>🏦 HDFC Bank Loan Prediction — AI Project Manual</h2>
+        <div class="nav-links">
+            <a href="INDEX.html">📑 All Documents</a>
+            <a href="PROJECT_PLAN.html">Project Plan</a>
+            <a href="LEADERS_VIVA_GUIDE.html">Viva Guide</a>
+            <a href="PARAMETERS_CHEAT_SHEET.html">Cheat Sheet</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1 id="master-parameter-comparison-viva-quick-reference-cheat-sheet">Master Parameter Comparison &amp; Viva Quick Reference Cheat Sheet</h1>
+<blockquote>
+<p><strong>HDFC Bank Loan Approval Prediction System</strong><br />
+<strong>All 4 Machine Learning Models Side-by-Side</strong></p>
+</blockquote>
+<hr />
+<h2 id="1-quick-master-comparison-table">1. Quick Master Comparison Table</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Model</th>
+<th style="text-align: left;">Primary Regularization Parameter</th>
+<th style="text-align: left;">Splitting / Kernel Metric</th>
+<th style="text-align: left;">Overfitting Risk Parameter</th>
+<th style="text-align: left;">Requires Scaling (<code>StandardScaler</code>)?</th>
+<th style="text-align: left;">Our Configured Values</th>
+<th style="text-align: left;">Test Accuracy</th>
+<th style="text-align: left;">F1-Score</th>
+<th style="text-align: left;">ROC-AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Logistic Regression</strong></td>
+<td style="text-align: left;"><code>C</code> (inverse penalty)</td>
+<td style="text-align: left;">Sigmoid link function</td>
+<td style="text-align: left;">High <code>C</code> ($&gt;100$)</td>
+<td style="text-align: left;"><strong>YES (Strictly)</strong></td>
+<td style="text-align: left;"><code>C=1.0, solver='lbfgs', max_iter=1000</code></td>
+<td style="text-align: left;"><strong>86.18%</strong></td>
+<td style="text-align: left;"><strong>0.9081</strong></td>
+<td style="text-align: left;">0.8000</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Decision Tree</strong></td>
+<td style="text-align: left;"><code>min_samples_split</code>, <code>min_samples_leaf</code></td>
+<td style="text-align: left;"><code>criterion='gini'</code> or <code>'entropy'</code></td>
+<td style="text-align: left;"><code>max_depth=None</code> (Severe!)</td>
+<td style="text-align: left;">NO (Scale invariant)</td>
+<td style="text-align: left;"><code>max_depth=4, min_samples_split=10, min_samples_leaf=5</code></td>
+<td style="text-align: left;">82.11%</td>
+<td style="text-align: left;">0.8804</td>
+<td style="text-align: left;">0.8485</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Random Forest</strong></td>
+<td style="text-align: left;"><code>min_samples_leaf</code>, <code>max_depth</code></td>
+<td style="text-align: left;">Ensemble Bagging + Gini</td>
+<td style="text-align: left;"><code>max_depth=None</code>, <code>max_features=None</code></td>
+<td style="text-align: left;">NO (Tree ensemble)</td>
+<td style="text-align: left;"><code>n_estimators=100, max_depth=6, max_features='sqrt'</code></td>
+<td style="text-align: left;">84.55%</td>
+<td style="text-align: left;">0.8962</td>
+<td style="text-align: left;"><strong>0.8619</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Support Vector Machine (SVM)</strong></td>
+<td style="text-align: left;"><code>C</code> (slack penalty)</td>
+<td style="text-align: left;"><code>kernel='rbf'</code>, <code>gamma='scale'</code></td>
+<td style="text-align: left;">High <code>C</code> ($&gt;100$), High <code>gamma</code> ($&gt;10$)</td>
+<td style="text-align: left;"><strong>YES (Catastrophic without it)</strong></td>
+<td style="text-align: left;"><code>C=1.0, kernel='rbf', gamma='scale', probability=True</code></td>
+<td style="text-align: left;">84.55%</td>
+<td style="text-align: left;">0.8984</td>
+<td style="text-align: left;">0.8034</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-parameter-tuning-matrix-what-happens-when-you-change">2. Parameter Tuning Matrix: "What Happens When You Change..."</h2>
+<h3 id="logistic-regression">Logistic Regression</h3>
+<ul>
+<li><strong>Increase <code>C</code> (e.g. 100):</strong> Less regularization $\to$ model fits training noise $\to$ risk of overfitting.</li>
+<li><strong>Decrease <code>C</code> (e.g. 0.01):</strong> High regularization $\to$ coefficients shrunk toward zero $\to$ underfitting.</li>
+<li><strong>Increase <code>max_iter</code> (e.g. 1000):</strong> Guarantees convergence $\to$ eliminates <code>ConvergenceWarning</code>.</li>
+<li><strong>Set <code>class_weight='balanced'</code>:</strong> Penalizes false approvals more heavily $\to$ recall of Rejected class rises.</li>
+</ul>
+<h3 id="decision-tree">Decision Tree</h3>
+<ul>
+<li><strong><code>max_depth=None</code>:</strong> Tree memorizes every applicant $\to$ Train Accuracy = 100%, Test Accuracy drops to 68% (<strong>Severe Overfitting</strong>).</li>
+<li><strong><code>max_depth=4</code>:</strong> Controlled tree $\to$ optimal balance on HDFC dataset (82.11% accuracy).</li>
+<li><strong>Increase <code>min_samples_split</code> (e.g. 10):</strong> Prevents splitting on tiny subgroups $\to$ smoother decision rules.</li>
+<li><strong>Increase <code>min_samples_leaf</code> (e.g. 5):</strong> Ensures every final decision is backed by $\ge 5$ applicants.</li>
+</ul>
+<h3 id="random-forest">Random Forest</h3>
+<ul>
+<li><strong>Increase <code>n_estimators</code> (e.g. from 10 to 100 to 500):</strong> Reduces variance, stabilizes predictions. <strong>Never overfits by adding more trees.</strong></li>
+<li><strong><code>max_features='sqrt'</code> (Default):</strong> Only examines $\sqrt{14} \approx 3.7$ features per split $\to$ decorrelates trees $\to$ lower ensemble variance.</li>
+<li><strong><code>max_features=None</code>:</strong> Uses all features per split $\to$ trees become correlated $\to$ ensemble acts like a single tree.</li>
+<li><strong><code>bootstrap=True</code>:</strong> Enables random sampling with replacement $\to$ enables Out-Of-Bag (OOB) error estimation.</li>
+</ul>
+<h3 id="support-vector-machine-svm">Support Vector Machine (SVM)</h3>
+<ul>
+<li><strong>Increase <code>C</code> (e.g. 100):</strong> Hard margin $\to$ strictly punishes violations $\to$ narrow margin $\to$ risk of overfitting.</li>
+<li><strong>Decrease <code>C</code> (e.g. 0.01):</strong> Soft margin $\to$ wide margin $\to$ ignores boundary details $\to$ risk of underfitting.</li>
+<li><strong>Increase <code>gamma</code> (e.g. 10):</strong> Gaussian bells become narrow peaks $\to$ circular decision islands $\to$ severe overfitting.</li>
+<li><strong><code>gamma='scale'</code>:</strong> Automatically sets $\gamma = \frac{1}{n_{\text{features}} \times \text{Var}(X)}$ (robust default).</li>
+<li><strong><code>kernel='rbf'</code>:</strong> Allows non-linear separating boundaries.</li>
+</ul>
+<hr />
+<h2 id="3-the-30-second-leader-summary-for-the-viva">3. The 30-Second Leader Summary for the Viva</h2>
+<blockquote>
+<p><em>"For HDFC Bank's loan eligibility prediction, we developed and compared 4 supervised classification architectures: Logistic Regression, Decision Tree, Random Forest, and SVM. To ensure fair evaluation and prevent data leakage, we applied median and mode imputation, engineered domain banking features (Total Income, EMI load, and Debt Service ratio), scaled continuous features via StandardScaler, and used 5-fold stratified cross-validation. While Logistic Regression achieved the highest test accuracy of 86.18% due to the strong linear separation offered by Credit History, Random Forest delivered the highest ROC-AUC of 0.8619, proving to be the most robust probabilistic ranker for risk-adjusted lending decisions."</em></p>
+</blockquote>
+        <div class="footer">
+            HDFC Bank Loan Approval Classification Project | Built for AI for Engineers
+        </div>
+    </div>
+</body>
+</html>

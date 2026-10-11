@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logistic Regression Parameters Guide — HDFC Bank AI Project</title>
+    
+    <!-- MathJax for rendering LaTeX formulas -->
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            line-height: 1.65;
+            color: #24292f;
+            background-color: #f6f8fa;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #0d47a1;
+            color: white;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar h2 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+        .nav-links a {
+            color: #e3f2fd;
+            text-decoration: none;
+            margin-left: 16px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .nav-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 980px;
+            margin: 30px auto;
+            background: #ffffff;
+            padding: 45px 55px;
+            border-radius: 8px;
+            border: 1px solid #d0d7de;
+            box-shadow: 0 3px 12px rgba(140, 149, 159, 0.15);
+        }
+        h1, h2, h3, h4 {
+            color: #1a202c;
+            font-weight: 600;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            line-height: 1.25;
+        }
+        h1 {
+            font-size: 2rem;
+            border-bottom: 2px solid #eaecef;
+            padding-bottom: 10px;
+            color: #0d47a1;
+        }
+        h2 {
+            font-size: 1.5rem;
+            border-bottom: 1px solid #eaecef;
+            padding-bottom: 8px;
+            margin-top: 32px;
+        }
+        h3 {
+            font-size: 1.25rem;
+        }
+        p, ul, ol {
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-size: 1rem;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            display: table;
+            font-size: 0.92rem;
+        }
+        th, td {
+            border: 1px solid #d0d7de;
+            padding: 10px 14px;
+            text-align: left;
+        }
+        th {
+            background-color: #f3f4f6;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        code {
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+            background-color: rgba(175, 184, 193, 0.2);
+            padding: 0.2em 0.4em;
+            border-radius: 6px;
+            font-size: 85%;
+            color: #b91c1c;
+        }
+        pre {
+            background-color: #1e293b;
+            color: #f8fafc;
+            padding: 16px;
+            border-radius: 8px;
+            overflow: auto;
+            font-size: 88%;
+            line-height: 1.45;
+        }
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+        }
+        blockquote {
+            margin: 16px 0;
+            padding: 12px 18px;
+            border-left: 4px solid #2563eb;
+            background-color: #eff6ff;
+            color: #1e3a8a;
+            border-radius: 0 6px 6px 0;
+        }
+        blockquote p {
+            margin: 0;
+        }
+        /* MathJax equation display formatting */
+        .MathJax {
+            font-size: 1.15em !important;
+            color: #0f172a;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+        @media print {
+            .navbar { display: none; }
+            .container { border: none; box-shadow: none; margin: 0; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h2>🏦 HDFC Bank Loan Prediction — AI Project Manual</h2>
+        <div class="nav-links">
+            <a href="INDEX.html">📑 All Documents</a>
+            <a href="PROJECT_PLAN.html">Project Plan</a>
+            <a href="LEADERS_VIVA_GUIDE.html">Viva Guide</a>
+            <a href="PARAMETERS_CHEAT_SHEET.html">Cheat Sheet</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1 id="logistic-regression-complete-parameter-architecture-guide">Logistic Regression — Complete Parameter &amp; Architecture Guide</h1>
+<blockquote>
+<p><strong>Project:</strong> HDFC Bank Loan Approval Prediction<br />
+<strong>Target:</strong> Binary Classification (<code>0 = Rejected</code>, <code>1 = Approved</code>)<br />
+<strong>Model:</strong> <code>sklearn.linear_model.LogisticRegression</code><br />
+<strong>Role:</strong> Group Leader's Technical Deep-Dive &amp; Parameter Manual</p>
+</blockquote>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#1-core-mathematical-intuition">Core Mathematical Intuition</a></li>
+<li><a href="#2-complete-parameter-dictionary">Complete Parameter Dictionary</a></li>
+<li><a href="#3-parameter-sensitivity-analysis">Parameter Sensitivity Analysis (What Happens When You Change...)</a></li>
+<li><a href="#4-our-chosen-configuration-for-hdfc-loan-data">Our Chosen Configuration for HDFC Loan Data</a></li>
+<li><a href="#5-feature-coefficients--banking-odds-ratio">Feature Coefficients &amp; Banking Odds Ratio</a></li>
+<li><a href="#6-overfitting-vs-underfitting-in-logistic-regression">Overfitting vs. Underfitting in Logistic Regression</a></li>
+<li><a href="#7-top-viva-questions--model-answers-on-parameters">Top Viva Questions &amp; Model Answers on Parameters</a></li>
+</ol>
+<hr />
+<h2 id="1-core-mathematical-intuition">1. Core Mathematical Intuition</h2>
+<p>Despite the name having "regression", Logistic Regression is a <strong>probabilistic linear classification algorithm</strong>.</p>
+<h3 id="the-math-step-by-step">The Math Step-by-Step:</h3>
+<ol>
+<li>
+<p><strong>Linear Equation (Log-Odds / Logit):</strong>
+   $$z = w_0 + w_1 x_1 + w_2 x_2 + \dots + w_n x_n = \mathbf{w}^T \mathbf{x} + b$$
+   Where $\mathbf{x}$ are applicant features (Credit History, Total Income, Loan Amount, etc.), $\mathbf{w}$ are learned weights (coefficients), and $b$ is the bias (intercept).</p>
+</li>
+<li>
+<p><strong>The Sigmoid (Logistic) Function:</strong>
+   To turn the unbounded real number $z \in (-\infty, +\infty)$ into a valid probability $P \in [0, 1]$:
+   $$P(Y=1 \mid \mathbf{x}) = \sigma(z) = \frac{1}{1 + e^{-z}} = \frac{1}{1 + e^{-(\mathbf{w}^T \mathbf{x} + b)}}$$</p>
+</li>
+<li>
+<p><strong>Decision Rule:</strong>
+   $$\hat{y} = \begin{cases} 1 \text{ (Approved)}, &amp; \text{if } P(Y=1 \mid \mathbf{x}) \ge 0.50 \ 0 \text{ (Rejected)}, &amp; \text{if } P(Y=1 \mid \mathbf{x}) &lt; 0.50 \end{cases}$$</p>
+</li>
+<li>
+<p><strong>Loss Function (Binary Cross-Entropy / Log Loss):</strong>
+   $$J(\mathbf{w}, b) = -\frac{1}{N} \sum_{i=1}^{N} \left[ y^{(i)} \log(\hat{p}^{(i)}) + (1 - y^{(i)}) \log(1 - \hat{p}^{(i)}) \right] + \text{Regularization Term}$$</p>
+</li>
+</ol>
+<hr />
+<h2 id="2-complete-parameter-dictionary">2. Complete Parameter Dictionary</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Type &amp; Default</th>
+<th style="text-align: left;">What It Controls</th>
+<th style="text-align: left;">Valid Options</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>C</code></td>
+<td style="text-align: left;"><code>float, default=1.0</code></td>
+<td style="text-align: left;"><strong>Inverse of regularization strength</strong>. Smaller values specify stronger regularization.</td>
+<td style="text-align: left;">Any positive float: <code>0.001</code>, <code>0.01</code>, <code>0.1</code>, <code>1.0</code>, <code>10.0</code>, <code>100.0</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>penalty</code></td>
+<td style="text-align: left;"><code>{'l1', 'l2', 'elasticnet', None}, default='l2'</code></td>
+<td style="text-align: left;">Specifies the norm of the penalty applied to prevent weights from growing too large.</td>
+<td style="text-align: left;"><code>'l2'</code> (Ridge), <code>'l1'</code> (Lasso), <code>'elasticnet'</code>, <code>None</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>solver</code></td>
+<td style="text-align: left;"><code>str, default='lbfgs'</code></td>
+<td style="text-align: left;">Algorithm used to optimize the loss function (find optimal weights $\mathbf{w}$).</td>
+<td style="text-align: left;"><code>'lbfgs'</code>, <code>'liblinear'</code>, <code>'newton-cg'</code>, <code>'sag'</code>, <code>'saga'</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>max_iter</code></td>
+<td style="text-align: left;"><code>int, default=100</code></td>
+<td style="text-align: left;">Maximum number of gradient iterations taken for the solver to converge.</td>
+<td style="text-align: left;">Positive integer: <code>100</code>, <code>500</code>, <code>1000</code>, <code>5000</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>tol</code></td>
+<td style="text-align: left;"><code>float, default=1e-4</code></td>
+<td style="text-align: left;">Tolerance for stopping criteria. Optimization stops if improvement is smaller than <code>tol</code>.</td>
+<td style="text-align: left;">Small positive float: <code>1e-3</code>, <code>1e-4</code>, <code>1e-5</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>class_weight</code></td>
+<td style="text-align: left;"><code>dict or 'balanced', default=None</code></td>
+<td style="text-align: left;">Weights associated with classes. Useful for handling class imbalance.</td>
+<td style="text-align: left;"><code>None</code>, <code>'balanced'</code>, or custom dict <code>{0: 2.0, 1: 1.0}</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>fit_intercept</code></td>
+<td style="text-align: left;"><code>bool, default=True</code></td>
+<td style="text-align: left;">Specifies if a constant bias term $b$ should be added to the decision function.</td>
+<td style="text-align: left;"><code>True</code>, <code>False</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>random_state</code></td>
+<td style="text-align: left;"><code>int, default=None</code></td>
+<td style="text-align: left;">Seed used by random number generator (relevant when solver is <code>'sag'</code>, <code>'saga'</code>, or <code>'liblinear'</code>).</td>
+<td style="text-align: left;">Any integer (we use <code>42</code>)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-parameter-sensitivity-analysis">3. Parameter Sensitivity Analysis</h2>
+<h3 id="31-what-happens-when-you-change-c">3.1 What happens when you change <code>C</code>?</h3>
+<p><code>C = 1 / \lambda</code>, where $\lambda$ is the penalty multiplier.
+* <strong>When <code>C</code> is very small (<code>0.001</code> to <code>0.01</code>):</strong>
+  * <strong>Effect:</strong> Heavy regularization. Weights $\mathbf{w}$ are shrunk severely toward zero.
+  * <strong>Risk:</strong> <strong>Underfitting</strong>. The model becomes too stiff and cannot capture real relationships between income and approval. Test and train accuracy both drop.
+* <strong>When <code>C = 1.0</code> (Default / Optimal):</strong>
+  * <strong>Effect:</strong> Balances empirical error on training data with coefficient shrinkage.
+  * <strong>Result:</strong> Achieves <strong>86.18% test accuracy</strong> on our HDFC loan data without overfitting.
+* <strong>When <code>C</code> is very large (<code>100</code> to <code>10000</code>):</strong>
+  * <strong>Effect:</strong> Regularization is essentially turned off. The optimizer attempts to fit every noisy applicant perfectly.
+  * <strong>Risk:</strong> <strong>Overfitting</strong> or numerical instability if features are collinear.</p>
+<h3 id="32-what-happens-when-you-change-penalty">3.2 What happens when you change <code>penalty</code>?</h3>
+<ul>
+<li><strong><code>penalty='l2'</code> (Ridge Penalty, $\sum w_j^2$):</strong></li>
+<li>Shrinks all coefficients toward zero, but rarely sets any exactly to zero.</li>
+<li>Best when all features are potentially somewhat useful.</li>
+<li><strong><code>penalty='l1'</code> (Lasso Penalty, $\sum |w_j|$):</strong></li>
+<li>Can force coefficients of irrelevant features to <strong>exactly zero</strong>.</li>
+<li>Performs automated feature selection.</li>
+<li>Requires <code>solver='liblinear'</code> or <code>solver='saga'</code>.</li>
+</ul>
+<h3 id="33-what-happens-when-you-change-solver">3.3 What happens when you change <code>solver</code>?</h3>
+<ul>
+<li><strong><code>'lbfgs'</code> (Limited-memory BFGS, Quasi-Newton):</strong></li>
+<li>Default and best for small-to-medium tabular datasets like ours (614 rows). Fast and robust.</li>
+<li><strong><code>'liblinear'</code>:</strong></li>
+<li>Coordinate descent algorithm. Excellent for small datasets and supports L1 penalty.</li>
+<li><strong><code>'saga'</code>:</strong></li>
+<li>Stochastic Average Gradient descent. Necessary for very large datasets ($&gt;100,000$ rows) or when combining ElasticNet with large data.</li>
+</ul>
+<h3 id="34-what-happens-when-you-change-max_iter">3.4 What happens when you change <code>max_iter</code>?</h3>
+<ul>
+<li><strong>If <code>max_iter=100</code>:</strong> On unscaled or complex datasets, you will often get:<br />
+<code>ConvergenceWarning: lbfgs failed to converge (status=1): STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.</code></li>
+<li><strong>If <code>max_iter=1000</code>:</strong> Guarantees the gradient solver has sufficient iterations to reach the true global loss minimum.</li>
+</ul>
+<h3 id="35-what-happens-when-you-change-class_weight">3.5 What happens when you change <code>class_weight</code>?</h3>
+<p>Our dataset has class imbalance (~69% Approved vs ~31% Rejected).
+* <strong><code>class_weight=None</code>:</strong>
+  * Every applicant has equal error loss.
+  * Achieves high recall on Approved (98.8%) and 86.18% overall accuracy.
+* <strong><code>class_weight='balanced'</code>:</strong>
+  * Adjusts weights inversely proportional to class frequencies:<br />
+    $w_0 = \frac{N}{2 \times N_0} \approx 1.6$, $w_1 = \frac{N}{2 \times N_1} \approx 0.72$
+  * <strong>Effect:</strong> Increases penalty for misclassifying Rejected applications (Type I error).
+  * <strong>Trade-off:</strong> Recall of Rejected applicants increases (more bad loans caught), but some good applicants are rejected (overall accuracy may slightly decrease to ~80-82%).</p>
+<hr />
+<h2 id="4-our-chosen-configuration-for-hdfc-loan-data">4. Our Chosen Configuration for HDFC Loan Data</h2>
+<pre><code class="language-python">model = LogisticRegression(
+    C=1.0,               # Balanced regularization
+    solver='lbfgs',      # Quasi-Newton optimization algorithm
+    max_iter=1000,       # Ample headroom for full mathematical convergence
+    random_state=42      # Complete reproducibility
+)
+</code></pre>
+<h3 id="performance-on-hdfc-dataset">Performance on HDFC Dataset:</h3>
+<ul>
+<li><strong>5-Fold Cross-Validation Accuracy:</strong> <code>79.63% (+/- 4.21%)</code></li>
+<li><strong>Test Set Accuracy:</strong> <code>86.18%</code></li>
+<li><strong>Precision:</strong> <code>0.8400</code></li>
+<li><strong>Recall (Sensitivity):</strong> <code>0.9882</code> (Catches 98.8% of creditworthy customers)</li>
+<li><strong>F1-Score:</strong> <code>0.9081</code></li>
+<li><strong>ROC-AUC:</strong> <code>0.8000</code></li>
+</ul>
+<hr />
+<h2 id="5-feature-coefficients-banking-odds-ratio">5. Feature Coefficients &amp; Banking Odds Ratio</h2>
+<p>Because features were standardized with <code>StandardScaler</code>, the magnitude of each coefficient directly represents its statistical predictive power:</p>
+<p>$$\text{Odds Ratio} = e^{w_j}$$</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">Coefficient ($w_j$)</th>
+<th style="text-align: left;">Odds Ratio ($e^{w_j}$)</th>
+<th style="text-align: left;">Financial Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong><code>Credit_History</code></strong></td>
+<td style="text-align: left;"><strong>+3.138</strong></td>
+<td style="text-align: left;"><strong>23.06x</strong></td>
+<td style="text-align: left;">Having satisfactory credit history multiplies the odds of approval by <strong>23 times</strong>!</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>Married</code></strong></td>
+<td style="text-align: left;"><strong>+0.494</strong></td>
+<td style="text-align: left;"><strong>1.64x</strong></td>
+<td style="text-align: left;">Married applicants have 64% higher odds of approval (dual income stability).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>Dependents</code></strong></td>
+<td style="text-align: left;"><strong>+0.104</strong></td>
+<td style="text-align: left;"><strong>1.11x</strong></td>
+<td style="text-align: left;">Slight positive effect when balanced by income.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>Property_Area</code></strong></td>
+<td style="text-align: left;"><strong>+0.064</strong></td>
+<td style="text-align: left;"><strong>1.07x</strong></td>
+<td style="text-align: left;">Semiurban locations have higher approval probability.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>ApplicantIncome</code></strong></td>
+<td style="text-align: left;"><strong>+0.026</strong></td>
+<td style="text-align: left;"><strong>1.03x</strong></td>
+<td style="text-align: left;">Positive individual income contribution.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>Education</code></strong></td>
+<td style="text-align: left;"><strong>-0.411</strong></td>
+<td style="text-align: left;"><strong>0.66x</strong></td>
+<td style="text-align: left;">Non-graduate status reduces approval odds by 34%.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>Gender</code></strong></td>
+<td style="text-align: left;"><strong>-0.211</strong></td>
+<td style="text-align: left;"><strong>0.81x</strong></td>
+<td style="text-align: left;">Minor demographic adjustment.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>Self_Employed</code></strong></td>
+<td style="text-align: left;"><strong>-0.182</strong></td>
+<td style="text-align: left;"><strong>0.83x</strong></td>
+<td style="text-align: left;">Self-employed individuals have slightly higher income volatility risk.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-overfitting-vs-underfitting-in-logistic-regression">6. Overfitting vs. Underfitting in Logistic Regression</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Scenario</th>
+<th style="text-align: left;">Symptom</th>
+<th style="text-align: left;">How to Detect in Code</th>
+<th style="text-align: left;">Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Overfitting</strong></td>
+<td style="text-align: left;">Train Accuracy = 95%, Test Accuracy = 72%</td>
+<td style="text-align: left;">Large gap between <code>model.score(X_train, y_train)</code> and <code>model.score(X_test, y_test)</code></td>
+<td style="text-align: left;">Decrease <code>C</code> (e.g. <code>C=0.1</code>), use <code>penalty='l1'</code>, remove collinear features</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Underfitting</strong></td>
+<td style="text-align: left;">Train Accuracy = 68%, Test Accuracy = 67%</td>
+<td style="text-align: left;">Both training and testing performance are poor</td>
+<td style="text-align: left;">Increase <code>C</code> (e.g. <code>C=10</code>), add polynomial/interaction features, check scaling</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Optimal Fit</strong></td>
+<td style="text-align: left;">Train CV = 79.6%, Test = 86.2%</td>
+<td style="text-align: left;">Consistent scores across 5 cross-validation folds</td>
+<td style="text-align: left;"><strong>Our current model!</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7-top-viva-questions-model-answers-on-parameters">7. Top Viva Questions &amp; Model Answers on Parameters</h2>
+<h3 id="q1-why-is-feature-scaling-standardscaler-mandatory-for-logistic-regression">Q1: Why is feature scaling (<code>StandardScaler</code>) mandatory for Logistic Regression?</h3>
+<p><strong>Model Answer:</strong>  </p>
+<blockquote>
+<p><em>"In Logistic Regression, the regularization term $\frac{1}{2C} \sum w_j^2$ penalizes all feature weights equally. If <code>ApplicantIncome</code> is in thousands (e.g., 50,000) and <code>Credit_History</code> is in units of 0 or 1, the raw coefficient for income would naturally be tiny (e.g., 0.0001) while credit history's coefficient would be large. The penalty would disproportionately punish credit history while leaving income unregularized. StandardScaler puts all features on the same unit scale (mean=0, std=1), ensuring fair regularization and fast gradient convergence."</em></p>
+</blockquote>
+<h3 id="q2-what-is-the-role-of-parameter-c">Q2: What is the role of parameter <code>C</code>?</h3>
+<p><strong>Model Answer:</strong>  </p>
+<blockquote>
+<p><em>"<code>C</code> is the inverse regularization parameter. A high <code>C</code> gives less weight to the penalty, allowing the model to fit training data tighter (risk of overfitting). A low <code>C</code> increases penalty strength, shrinking weights towards zero and encouraging a simpler decision boundary (risk of underfitting). We used <code>C=1.0</code>, which provided optimal generalization on unseen test data."</em></p>
+</blockquote>
+<h3 id="q3-what-happens-if-max_iter-is-set-too-low-say-10">Q3: What happens if <code>max_iter</code> is set too low, say 10?</h3>
+<p><strong>Model Answer:</strong>  </p>
+<blockquote>
+<p><em>"The optimization solver (<code>lbfgs</code>) will terminate before finding the minimum of the convex cross-entropy loss surface. Scikit-learn will throw a <code>ConvergenceWarning</code>, and the resulting weights $\mathbf{w}$ will be suboptimal, leading to degraded classification accuracy."</em></p>
+</blockquote>
+<h3 id="q4-how-does-logistic-regression-handle-class-imbalance-through-parameters">Q4: How does Logistic Regression handle class imbalance through parameters?</h3>
+<p><strong>Model Answer:</strong>  </p>
+<blockquote>
+<p><em>"Through the <code>class_weight='balanced'</code> parameter. When enabled, it computes weights inversely proportional to class frequencies using $w_j = \frac{n_samples}{n_classes \times \text{count}(y_j)}$. This increases the loss contribution of misclassifying the minority class (Rejected), shifting the decision threshold to catch more high-risk loans."</em></p>
+</blockquote>
+        <div class="footer">
+            HDFC Bank Loan Approval Classification Project | Built for AI for Engineers
+        </div>
+    </div>
+</body>
+</html>
